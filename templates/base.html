@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{% block title %}wellfulhome | Safe, Comfortable & Healthy Living{% endblock %}</title>
 
+    <!-- Favicon & WhatsApp Share Preview -->
+    <link rel="icon" type="image/jpeg" href="https://wellfulhome.com{% static 'images/wellful_home.jpg' %}">
+    <meta property="og:title" content="wellfulhome | Safe, Comfortable & Healthy Living">
+    <meta property="og:description" content="Everyday essentials for safe, healthy living in Ghana. Direct doorstep delivery.">
+    <meta property="og:image" content="https://wellfulhome.com{% static 'images/wellful_home.jpg' %}">
+    <meta property="og:url" content="https://wellfulhome.com/">
+    <meta property="og:type" content="website">
+
     <!-- PWA Web App Manifest & Android Theme Color -->
     <link rel="manifest" href="{% static 'manifest.json' %}">
     <meta name="theme-color" content="#052e16">
@@ -78,7 +86,7 @@
                 <!-- White Plaque with Enlarged Logo Graphic & Text -->
                 <div class="bg-white rounded-2xl px-4 py-2 sm:px-5 sm:py-2.5 shadow-xl flex items-center justify-center overflow-hidden border border-white/20">
                     <img 
-                        src="{% static 'images/pillars/wellful_home.jpg' %}" 
+                        src="{% static 'images/wellful_home.jpg' %}" 
                         alt="wellfulhome logo" 
                         class="h-11 sm:h-13 md:h-14 w-auto max-w-[180px] sm:max-w-[220px] object-contain scale-110 transform transition-transform duration-300 group-hover:scale-115"
                     >
@@ -156,12 +164,17 @@
                     </div>
                 {% endif %}
 
+                <button id="navInstallBtn" type="button" onclick="triggerAndroidInstall()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-300 text-xs font-bold transition">
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                    <span>Install App</span>
+                </button>
+
                 <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-black text-sm shadow-md transition transform hover:-translate-y-0.5">
                     <span>Explore Catalog</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </div>
-        </div>
+        </div> 
     </header>
 
     <!-- System Messages -->
