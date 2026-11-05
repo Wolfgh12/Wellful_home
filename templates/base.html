@@ -6,13 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{% block title %}wellfulhome | Safe, Comfortable & Healthy Living{% endblock %}</title>
 
-    <!-- Favicon & WhatsApp Share Preview -->
-    <link rel="icon" type="image/jpeg" href="https://wellfulhome.com{% static 'images/wellful_home.jpg' %}">
-    <meta property="og:title" content="wellfulhome | Safe, Comfortable & Healthy Living">
-    <meta property="og:description" content="Everyday essentials for safe, healthy living in Ghana. Direct doorstep delivery.">
-    <meta property="og:image" content="https://wellfulhome.com{% static 'images/wellful_home.jpg' %}">
-    <meta property="og:url" content="https://wellfulhome.com/">
+    <!-- Browser Tab Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'images/icons/icon-192x192.png' %}">
+
+    <!-- WhatsApp & Social Media Open Graph Preview -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wellfulhome.com/">
+    <meta property="og:title" content="wellfulhome | Safe, Comfortable & Healthy Living">
+    <meta property="og:description" content="Simple, reliable products for safe, comfortable, and healthy living in Ghana. Direct doorstep delivery.">
+    <meta property="og:image" content="https://wellfulhome.com{% static 'images/pillars/wellful_home.jpg' %}">
+    <meta property="og:image:secure_url" content="https://wellfulhome.com{% static 'images/pillars/wellful_home.jpg' %}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="675">
 
     <!-- PWA Web App Manifest & Android Theme Color -->
     <link rel="manifest" href="{% static 'manifest.json' %}">
