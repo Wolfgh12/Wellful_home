@@ -106,17 +106,13 @@
                 </div>
                 {% empty %}
                 <div class="col-span-full py-16 px-6 text-center bg-stone-50 rounded-3xl border border-dashed border-stone-300">
-                    <div class="w-14 h-14 rounded-2xl bg-stone-200/60 flex items-center justify-center mx-auto mb-4 text-stone-500">
-                        <i data-lucide="package-search" class="w-7 h-7"></i>
+                    <div class="w-14 h-14 rounded-2xl bg-stone-200/60 flex items-center justify-center mx-auto mb-4 text-stone-400">
+                        <i data-lucide="package" class="w-7 h-7"></i>
                     </div>
-                    <h3 class="text-base font-bold text-stone-800 mb-1">No Products Staged Yet</h3>
-                    <p class="text-xs text-stone-500 max-w-md mx-auto mb-6">
-                        Add individual items to your categories via the admin portal.
+                    <h3 class="text-base font-bold text-stone-800 mb-1">No Products Currently Listed</h3>
+                    <p class="text-xs text-stone-500 max-w-md mx-auto">
+                        New inventory is being updated across all departments. Check back shortly.
                     </p>
-                    <a href="{% url 'catalog:admin_product_create' %}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 text-xs font-black shadow-md transition">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>Add Product</span>
-                    </a>
                 </div>
                 {% endfor %}
             </div>
