@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}wellfulhome | Safe, Comfortable & Healthy Living{% endblock %}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            800: '#166534',
+                            900: '#14532d',
+                            950: '#052e16',
+                        },
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-stone-50 text-stone-900 font-sans antialiased selection:bg-brand-100 selection:text-brand-900">
+
+    <!-- Top Assistance & Nationwide Logistics Bar -->
+    <div class="bg-brand-950 text-stone-200 text-xs py-2 px-4 border-b border-brand-900">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Direct Doorstep Delivery Across Accra, Tema &amp; Nationwide Ghana</span>
+            </div>
+            <div class="flex items-center space-x-6">
+                <span class="text-stone-300">Tested Hardware &amp; Direct Assistance</span>
+                <a href="tel:+233268229696" class="hover:text-emerald-400 font-semibold flex items-center gap-1 transition">
+                    <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                    Help Hotline: +233 (0) 26 822 9696
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-50 bg-gradient-to-r from-brand-950 via-brand-900 to-emerald-950 border-b border-emerald-900/60 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
+            
+            <!-- Brand Logo & Replicated Typography -->
+            <a href="{% url 'home' %}" class="flex items-center space-x-4 group">
+                <!-- White Plaque with Enlarged Logo Graphic & Text -->
+                <div class="bg-white rounded-2xl px-4 py-2 sm:px-5 sm:py-2.5 shadow-xl flex items-center justify-center overflow-hidden border border-white/20">
+                    <img 
+                        src="{% static 'images/pillars/wellful_home.jpg' %}" 
+                        alt="wellfulhome logo" 
+                        class="h-11 sm:h-13 md:h-14 w-auto max-w-[180px] sm:max-w-[220px] object-contain scale-110 transform transition-transform duration-300 group-hover:scale-115"
+                    >
+                </div>
+                <div class="hidden sm:block">
+                    <span class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white block leading-none lowercase">
+                        wellful<span class="italic font-normal text-transparent" style="-webkit-text-stroke: 1.3px #ffffff;">home</span>
+                    </span>
+                    <span class="text-[10px] tracking-widest uppercase font-bold text-emerald-400 block mt-1.5">Safe &amp; Comfortable Living</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-2 text-sm font-semibold">
+                <a 
+                    href="{% url 'home' %}" 
+                    class="group relative px-4 py-2 rounded-xl text-stone-200 hover:text-white transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400/50 border {% if request.path == '/' %}bg-emerald-500/25 border-emerald-400/60 text-white shadow-[0_0_15px_rgba(16,185,129,0.35)]{% else %}border-transparent{% endif %}"
+                >
+                    <span>Home</span>
+                </a>
+
+                <a 
+                    href="{% if user.is_staff or user.is_superuser %}{% url 'accounts:admin_dashboard' %}{% else %}{% url 'accounts:admin_login' %}{% endif %}" 
+                    class="group relative px-4 py-2 rounded-xl text-stone-200 hover:text-white transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400/50 border {% if '/portal/' in request.path %}bg-emerald-500/25 border-emerald-400/60 text-white shadow-[0_0_15px_rgba(16,185,129,0.35)]{% else %}border-transparent{% endif %}"
+                >
+                    <span class="flex items-center gap-1.5">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                        <span>Admin</span>
+                    </span>
+                </a>
+                <a 
+                    href="/#about" 
+                    class="group relative px-4 py-2 rounded-xl text-stone-200 hover:text-white transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400/50 border border-transparent hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                >
+                    <span>About Us</span>
+                </a>
+                <a 
+                    href="/#contact" 
+                    class="group relative px-4 py-2 rounded-xl text-stone-200 hover:text-white transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400/50 border border-transparent hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                >
+                    <span>Contact</span>
+                </a>
+            </nav>
+
+            <!-- User Actions -->
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                {% if user.is_authenticated %}
+                    <div class="flex items-center space-x-3">
+                        <!-- Clickable Dashboard Identity Badge -->
+                        <a 
+                            href="{% if user.is_staff or user.is_superuser %}{% url 'accounts:admin_dashboard' %}{% else %}{% url 'accounts:customer_dashboard' %}{% endif %}" 
+                            class="group flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-500/40 hover:border-emerald-400 text-right transition shadow-sm hover:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                            title="Open Dashboard"
+                        >
+                            <div class="text-right hidden sm:block">
+                                <span class="text-[10px] font-black uppercase tracking-wider text-emerald-400 group-hover:text-emerald-300 block">
+                                    {% if user.is_superuser %}
+                                        Supreme Admin
+                                    {% elif user.is_staff %}
+                                        Employee Admin
+                                    {% else %}
+                                        {{ user.get_role_display }}
+                                    {% endif %}
+                                </span>
+                                <span class="text-xs font-black text-white group-hover:text-emerald-200 leading-tight block">{{ user.username }}</span>
+                            </div>
+                            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 group-hover:bg-emerald-500 group-hover:text-brand-950 text-emerald-400 flex items-center justify-center transition shrink-0">
+                                <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
+                            </div>
+                        </a>
+
+                        <a href="{% url 'accounts:logout' %}" class="text-xs text-stone-300 hover:text-red-400 px-2 py-1 font-semibold transition" title="Log Out">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                {% endif %}
+
+                <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-black text-sm shadow-md transition transform hover:-translate-y-0.5">
+                    <span>Explore Catalog</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- System Messages -->
+    {% if messages %}
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+            {% for message in messages %}
+                <div class="p-4 rounded-xl text-sm font-semibold flex items-center justify-between {% if message.tags == 'error' %}bg-red-900/40 text-red-200 border border-red-500/40{% elif message.tags == 'success' %}bg-emerald-900/40 text-emerald-200 border border-emerald-500/40{% else %}bg-stone-800 text-stone-200 border border-stone-700{% endif %}">
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 border-t border-stone-800 py-16 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div class="md:col-span-2 space-y-4">
+                <span class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white block lowercase leading-none">
+                    wellful<span class="italic font-normal text-transparent" style="-webkit-text-stroke: 1.3px #ffffff;">home</span>
+                </span>
+                <p class="text-sm text-stone-400 leading-relaxed max-w-md mt-2">
+                    Simple, reliable products for safe, comfortable, and healthy living in Ghana. From non-slip shoes and fridge protectors to clean hygiene essentials and easy blood pressure monitors.
+                </p>
+                <div class="flex items-center gap-2 text-xs text-stone-500 pt-1">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i>
+                    <span>Accra, Greater Accra Region, Ghana</span>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-xs uppercase font-bold text-stone-200 tracking-wider mb-4">Everyday Categories</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/#pillars" class="hover:text-emerald-400 transition">Clean Living &amp; Hygiene</a></li>
+                    <li><a href="/#pillars" class="hover:text-emerald-400 transition">Gentle Exercise &amp; Walking</a></li>
+                    <li><a href="/#pillars" class="hover:text-emerald-400 transition">Comfortable Non-Slip Shoes</a></li>
+                    <li><a href="/#pillars" class="hover:text-emerald-400 transition">Fridge &amp; TV Protectors</a></li>
+                    <li><a href="/#pillars" class="hover:text-emerald-400 transition">Easy Health Checks</a></li>
+                    <li><a href="/#pillars" class="hover:text-emerald-400 transition">Safe Storage for Papers</a></li>
+                    <li><a href="/#pillars" class="hover:text-emerald-400 transition">Healthy Food &amp; Vitamins</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xs uppercase font-bold text-stone-200 tracking-wider mb-4">Support &amp; Orders</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/#about" class="hover:text-emerald-400 transition">How Shopping Works</a></li>
+                    <li><a href="https://wa.me/233268229696" class="hover:text-emerald-400 transition">Chat on WhatsApp</a></li>
+                    <li><a href="tel:+233268229696" class="hover:text-emerald-400 transition">Help Hotline: +233 (0) 26 822 9696</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-8 border-t border-stone-800 text-xs text-stone-500 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 wellfulhome. All rights reserved. Ghana Digital Address Verified.</p>
+            <p class="text-stone-400 font-medium tracking-wide">
+                Engineered with excellence by <span class="text-stone-200 font-bold">Wolvatarr - The Digital Architects</span>.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Floating Button -->
+    <button 
+        id="backToTopBtn" 
+        class="fixed bottom-6 right-6 z-50 p-3 rounded-2xl bg-brand-900/90 hover:bg-brand-900 text-white shadow-xl border border-emerald-500/30 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 transform translate-y-3 hover:-translate-y-1 focus:outline-none"
+        aria-label="Back to top"
+    >
+        <i data-lucide="arrow-up" class="w-5 h-5 text-emerald-400"></i>
+    </button>
+
+    <script>
+        lucide.createIcons();
+
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 320) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+                backToTopBtn.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+                backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

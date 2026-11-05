@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Operations & Logistics Portal | Wellful Home{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-stone-950 text-stone-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto space-y-8">
+
+        <!-- Staff Identity Header -->
+        <div class="bg-gradient-to-r from-stone-900 via-brand-950 to-stone-900 border border-emerald-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden backdrop-blur-xl">
+            <div class="absolute -right-12 -top-12 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                <div class="flex items-center gap-5">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-brand-800 p-0.5 shadow-xl">
+                        <div class="w-full h-full bg-stone-950 rounded-[14px] flex items-center justify-center text-emerald-400">
+                            <i data-lucide="shield-check" class="w-8 h-8"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Staff Logistics & Operations</h1>
+                            <span class="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                                Employee Admin
+                            </span>
+                        </div>
+                        <p class="text-xs text-stone-400 mt-1">
+                            Logged in as <strong class="text-white">{{ user.username }}</strong> &bull; Senior care hardware fulfillment & inventory management across Ghana.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="{% url 'catalog:admin_product_create' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md transition">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span>Add New Product</span>
+                    </a>
+                    <a href="{% url 'accounts:admin_logout' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-950/60 hover:bg-red-900 border border-red-500/40 text-red-200 text-xs font-bold transition">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <span>Exit</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operational Metric Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div class="bg-stone-900/90 border border-stone-800 p-6 rounded-3xl shadow-xl space-y-2">
+                <div class="flex items-center justify-between text-stone-400">
+                    <span class="text-xs font-bold uppercase tracking-wider">Active Catalog SKUs</span>
+                    <i data-lucide="layers" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <div class="text-3xl font-black text-white">{{ active_products }} <span class="text-xs text-stone-500 font-normal">/ {{ total_products }}</span></div>
+                <p class="text-[11px] text-stone-500">Live for senior customer purchase</p>
+            </div>
+
+            <div class="bg-stone-900/90 border border-stone-800 p-6 rounded-3xl shadow-xl space-y-2">
+                <div class="flex items-center justify-between text-stone-400">
+                    <span class="text-xs font-bold uppercase tracking-wider">Low Stock SKUs</span>
+                    <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400"></i>
+                </div>
+                <div class="text-3xl font-black {% if low_stock_count > 0 %}text-amber-400{% else %}text-emerald-400{% endif %}">
+                    {{ low_stock_count }}
+                </div>
+                <p class="text-[11px] text-stone-500">5 or fewer units in warehouse</p>
+            </div>
+
+            <div class="bg-stone-900/90 border border-stone-800 p-6 rounded-3xl shadow-xl space-y-2">
+                <div class="flex items-center justify-between text-stone-400">
+                    <span class="text-xs font-bold uppercase tracking-wider">Depleted Stock</span>
+                    <i data-lucide="alert-octagon" class="w-5 h-5 text-red-400"></i>
+                </div>
+                <div class="text-3xl font-black {% if out_of_stock_count > 0 %}text-red-400{% else %}text-emerald-400{% endif %}">
+                    {{ out_of_stock_count }}
+                </div>
+                <p class="text-[11px] text-stone-500">Zero inventory units available</p>
+            </div>
+        </div>
+
+        <!-- Active Orders & Doorstep Installation Pipeline -->
+        <div class="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                    <h2 class="text-lg font-black text-white tracking-tight flex items-center gap-2">
+                        <i data-lucide="truck" class="w-5 h-5 text-emerald-400"></i>
+                        <span>Active Orders &amp; Doorstep Installation Pipeline</span>
+                    </h2>
+                    <p class="text-xs text-stone-400 mt-0.5">
+                        Confirm GPS digital addresses, tap satellite pin coordinates for riders, and update fulfillment stages.
+                    </p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="border-b border-stone-800 text-stone-400 uppercase tracking-wider font-bold">
+                            <th class="py-3 px-4">Order Ref</th>
+                            <th class="py-3 px-4">Recipient</th>
+                            <th class="py-3 px-4">Doorstep GPS &amp; Satellite Pin</th>
+                            <th class="py-3 px-4">Items / Total</th>
+                            <th class="py-3 px-4">Fulfillment State</th>
+                            <th class="py-3 px-4 text-right">Update Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-stone-800/60">
+                        {% for order in recent_orders %}
+                            <tr class="hover:bg-stone-800/40 transition">
+                                <td class="py-4 px-4 font-black text-white">#{{ order.order_number }}</td>
+                                <td class="py-4 px-4 text-stone-200">
+                                    <div class="font-bold text-white">{{ order.customer_name|default:order.user.username }}</div>
+                                    <a href="tel:{{ order.delivery_phone }}" class="text-[11px] text-emerald-400 hover:underline flex items-center gap-1 mt-0.5">
+                                        <i data-lucide="phone" class="w-3 h-3"></i>
+                                        <span>{{ order.delivery_phone }}</span>
+                                    </a>
+                                    {% if order.customer_email %}
+                                        <div class="text-[10px] text-stone-500">{{ order.customer_email }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="py-4 px-4 text-stone-300">
+                                    <div class="font-bold flex items-center gap-1.5 text-stone-200">
+                                        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
+                                        <span>{{ order.digital_address }}</span>
+                                    </div>
+                                    {% if order.google_maps_url %}
+                                        <a href="{{ order.google_maps_url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold transition">
+                                            <i data-lucide="navigation" class="w-3 h-3 text-emerald-400"></i>
+                                            <span>Open Satellite Pin</span>
+                                        </a>
+                                    {% endif %}
+                                    {% if order.delivery_notes %}
+                                        <div class="text-[10px] text-stone-500 mt-1 italic leading-tight">Note: {{ order.delivery_notes }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="py-4 px-4 text-stone-200">
+                                    <div class="font-black text-emerald-400">GHS {{ order.total_amount_ghs|floatformat:2 }}</div>
+                                    <div class="text-[10px] text-stone-500">
+                                        {% for item in order.items.all %}
+                                            {{ item.quantity }}x {{ item.product.name }}{% if not forloop.last %}, {% endif %}
+                                        {% empty %}
+                                            Direct Order
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider 
+                                        {% if order.status == 'DELIVERED' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/40
+                                        {% elif order.status == 'DISPATCHED' %}bg-sky-500/20 text-sky-300 border border-sky-500/40
+                                        {% elif order.status == 'PROCESSING' %}bg-amber-500/20 text-amber-300 border border-amber-500/40
+                                        {% else %}bg-stone-800 text-stone-300 border border-stone-700{% endif %}">
+                                        {{ order.get_status_display }}
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4 text-right">
+                                    <form method="post" action="{% url 'accounts:admin_update_order_status' order_id=order.id %}" class="inline-flex items-center gap-2">
+                                        {% csrf_token %}
+                                        <select name="status" class="bg-stone-950 border border-stone-700 text-stone-200 rounded-lg px-2.5 py-1 text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                                            {% for value, label in order_statuses %}
+                                                <option value="{{ value }}" {% if order.status == value %}selected{% endif %}>{{ label }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <button type="submit" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+                                            Save
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="6" class="py-8 text-center text-stone-500">No active orders in the dispatch queue.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 2: Warehouse Stock Levels & Inline Replenishment -->
+        <div class="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-black text-white tracking-tight flex items-center gap-2">
+                        <i data-lucide="boxes" class="w-5 h-5 text-emerald-400"></i>
+                        <span>Warehouse Inventory & Rapid Stock Level Adjustment</span>
+                    </h2>
+                    <p class="text-xs text-stone-400 mt-0.5">
+                        Update available quantities directly as shipments are verified in the warehouse.
+                    </p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="border-b border-stone-800 text-stone-400 uppercase tracking-wider font-bold">
+                            <th class="py-3 px-4">SKU / Item</th>
+                            <th class="py-3 px-4">Pillar</th>
+                            <th class="py-3 px-4">Retail Price</th>
+                            <th class="py-3 px-4">Condition</th>
+                            <th class="py-3 px-4">Current Units</th>
+                            <th class="py-3 px-4 text-center">Adjust Count</th>
+                            <th class="py-3 px-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-stone-800/60">
+                        {% for product in inventory_products %}
+                            <tr class="hover:bg-stone-800/40 transition">
+                                <td class="py-3 px-4">
+                                    <div class="font-bold text-white">{{ product.name }}</div>
+                                    <div class="text-[10px] text-stone-500">SKU: {{ product.sku }}</div>
+                                </td>
+                                <td class="py-3 px-4 text-stone-300">{{ product.category.name }}</td>
+                                <td class="py-3 px-4 font-bold text-white">GHS {{ product.price_ghs }}</td>
+                                <td class="py-3 px-4">
+                                    {% if product.stock_quantity == 0 %}
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-950 text-red-300 border border-red-500/40">Depleted</span>
+                                    {% elif product.is_low_stock %}
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-500/40">Low Stock</span>
+                                    {% else %}
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">Adequate</span>
+                                    {% endif %}
+                                </td>
+                                <td class="py-3 px-4 font-black text-white">{{ product.stock_quantity }}</td>
+                                <td class="py-3 px-4 text-center">
+                                    <form method="post" action="{% url 'accounts:admin_update_stock' product_id=product.id %}" class="inline-flex items-center gap-2">
+                                        {% csrf_token %}
+                                        <input type="number" name="stock_quantity" value="{{ product.stock_quantity }}" min="0" class="w-16 bg-stone-950 border border-stone-700 text-stone-100 rounded-lg px-2 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                                        <button type="submit" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+                                            Save
+                                        </button>
+                                    </form>
+                                </td>
+                                <td class="py-3 px-4 text-right">
+                                    <div class="inline-flex items-center gap-2">
+                                        <a href="{% url 'catalog:admin_product_edit' product_id=product.id %}" class="p-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-stone-300 hover:text-emerald-400 transition" title="Edit Product">
+                                            <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                        </a>
+                                        <form method="post" action="{% url 'catalog:admin_product_delete' product_id=product.id %}" onsubmit="return confirm('Are you sure you want to remove {{ product.name|escapejs }} from the catalog?');" class="inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="p-1.5 rounded-lg bg-stone-900 hover:bg-red-950 border border-stone-700 hover:border-red-500/40 text-stone-400 hover:text-red-400 transition" title="Delete Product">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7" class="py-8 text-center text-stone-500">No products configured.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

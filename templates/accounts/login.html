@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign In | Wellful Home Senior Wellness{% endblock %}
+
+{% block content %}
+<div class="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-stone-900 via-brand-950 to-stone-950">
+    <div class="max-w-md w-full space-y-8 bg-stone-900/90 border border-emerald-500/30 p-8 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-md">
+        
+        <!-- Brand Header -->
+        <div class="text-center space-y-3">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 text-emerald-400 shadow-inner">
+                <i data-lucide="log-in" class="w-8 h-8"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Welcome Back</h2>
+            <p class="text-xs uppercase tracking-widest font-bold text-emerald-400/80">Senior & Family Care Access</p>
+            <p class="text-xs text-stone-400 leading-relaxed">
+                Sign in to manage your senior wellness catalog orders, home adaptation consultations, and health depository assets.
+            </p>
+        </div>
+
+        <!-- Form Error Alerts -->
+        {% if form.non_field_errors %}
+            <div class="bg-red-950/80 border border-red-500/40 rounded-2xl p-4 text-xs text-red-200 space-y-1">
+                {% for error in form.non_field_errors %}
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="alert-circle" class="w-4 h-4 text-red-400 shrink-0"></i>
+                        <span>{{ error }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Customer Sign-In Form -->
+        <form method="post" novalidate class="mt-6 space-y-5">
+            {% csrf_token %}
+
+            <div>
+                <label for="{{ form.username.id_for_label }}" class="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-2">
+                    Username
+                </label>
+                <div class="relative [&>input]:w-full [&>input]:pl-11 [&>input]:pr-4 [&>input]:py-3 [&>input]:rounded-xl [&>input]:bg-stone-950 [&>input]:border [&>input]:border-stone-700 [&>input]:text-stone-100 [&>input]:placeholder-stone-500 [&>input]:focus:outline-none [&>input]:focus:ring-2 [&>input]:focus:ring-emerald-500 [&>input]:text-sm [&>input]:transition">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                    </div>
+                    {{ form.username }}
+                </div>
+                {% if form.username.errors %}
+                    <p class="mt-1.5 text-xs text-red-400 flex items-center gap-1">
+                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+                        {{ form.username.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <label for="{{ form.password.id_for_label }}" class="block text-xs font-bold uppercase tracking-wider text-stone-300">
+                        Password
+                    </label>
+                </div>
+                <div class="relative [&>input]:w-full [&>input]:pl-11 [&>input]:pr-4 [&>input]:py-3 [&>input]:rounded-xl [&>input]:bg-stone-950 [&>input]:border [&>input]:border-stone-700 [&>input]:text-stone-100 [&>input]:placeholder-stone-500 [&>input]:focus:outline-none [&>input]:focus:ring-2 [&>input]:focus:ring-emerald-500 [&>input]:text-sm [&>input]:transition">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                        <i data-lucide="lock" class="w-4 h-4"></i>
+                    </div>
+                    {{ form.password }}
+                </div>
+                {% if form.password.errors %}
+                    <p class="mt-1.5 text-xs text-red-400 flex items-center gap-1">
+                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+                        {{ form.password.errors.0 }}
+                    </p>
+                {% endif %}
+            </div>
+
+            <button 
+                type="submit" 
+                class="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-black text-sm shadow-lg shadow-emerald-950/60 transition transform hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-stone-900 focus:ring-emerald-500"
+            >
+                <span>Sign In to Account</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+        </form>
+
+        <!-- Navigation Links -->
+        <div class="pt-6 border-t border-stone-800 text-center space-y-3">
+            <p class="text-xs text-stone-400">
+                Don't have an account yet? 
+                <a href="{% url 'accounts:signup' %}" class="font-bold text-emerald-400 hover:text-emerald-300 transition">
+                    Register here
+                </a>
+            </p>
+            <p class="text-[11px] text-stone-500">
+                Staff member or system administrator? 
+                <a href="{% url 'accounts:admin_login' %}" class="text-stone-400 hover:text-white underline transition">
+                    Access Portal
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

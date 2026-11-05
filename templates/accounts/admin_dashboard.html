@@ -1,0 +1,482 @@
+{% extends 'base.html' %}
+
+{% block title %}Supreme & Staff Command Center | Wellful Home{% endblock %}
+
+{% block content %}
+<!-- Chart.js CDN for Visual Analytics -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="min-h-screen bg-stone-950 text-stone-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto space-y-8">
+
+        <!-- Top Header & Role Badge -->
+        <div class="bg-gradient-to-r from-stone-900 via-brand-950 to-stone-900 border border-emerald-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden backdrop-blur-xl">
+            <div class="absolute -right-12 -top-12 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                <div class="flex items-center gap-5">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br {% if is_super_admin %}from-amber-400 to-amber-700{% else %}from-emerald-400 to-brand-800{% endif %} p-0.5 shadow-xl">
+                        <div class="w-full h-full bg-stone-950 rounded-[14px] flex items-center justify-center text-white">
+                            {% if is_super_admin %}
+                                <i data-lucide="crown" class="w-8 h-8 text-amber-400"></i>
+                            {% else %}
+                                <i data-lucide="shield-check" class="w-8 h-8 text-emerald-400"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                                {% if is_super_admin %}Supreme Administrator Command{% else %}Staff Operations Center{% endif %}
+                            </h1>
+                            <span class="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider {% if is_super_admin %}bg-amber-500/20 text-amber-300 border border-amber-500/40{% else %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/40{% endif %}">
+                                {% if is_super_admin %}Supreme Super Admin{% else %}Employee Admin (Staff){% endif %}
+                            </span>
+                        </div>
+                        <p class="text-xs text-stone-400 mt-1">
+                            Operational oversight for Ghanaian senior care pillars, inventory dispatch, and equipment readiness.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="{% url 'catalog:admin_product_create' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 text-xs font-black shadow-lg shadow-emerald-950/40 transition transform hover:-translate-y-0.5">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span>+ Add New Product</span>
+                    </a>
+                    <a href="{% url 'accounts:admin_logout' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-950/60 hover:bg-red-900 border border-red-500/40 text-red-200 text-xs font-bold transition">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <span>Exit Portal</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {% if is_super_admin %}
+                <div class="bg-stone-900/90 border border-stone-800 p-6 rounded-3xl shadow-xl space-y-2">
+                    <div class="flex items-center justify-between text-stone-400">
+                        <span class="text-xs font-bold uppercase tracking-wider">Warehouse Asset Valuation</span>
+                        <i data-lucide="vault" class="w-5 h-5 text-amber-400"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-amber-400">GHS {{ inventory_valuation|floatformat:2 }}</div>
+                    <p class="text-[11px] text-stone-500">Physical inventory on-hand in Ghana</p>
+                </div>
+            {% endif %}
+
+            <div class="bg-stone-900/90 border border-stone-800 p-6 rounded-3xl shadow-xl space-y-2">
+                <div class="flex items-center justify-between text-stone-400">
+                    <span class="text-xs font-bold uppercase tracking-wider">Active Catalog SKUs</span>
+                    <i data-lucide="layers" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black text-white">{{ active_products }} <span class="text-xs text-stone-500 font-normal">/ {{ total_products }} total</span></div>
+                <p class="text-[11px] text-stone-500">Available across 7 care pillars</p>
+            </div>
+
+            <div class="bg-stone-900/90 border border-stone-800 p-6 rounded-3xl shadow-xl space-y-2">
+                <div class="flex items-center justify-between text-stone-400">
+                    <span class="text-xs font-bold uppercase tracking-wider">Inventory Alerts</span>
+                    <i data-lucide="alert-octagon" class="w-5 h-5 text-red-400"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black {% if low_stock_products or out_of_stock_products %}text-red-400{% else %}text-emerald-400{% endif %}">
+                    {{ low_stock_products.count }} <span class="text-xs text-stone-500 font-normal">low | {{ out_of_stock_products.count }} depleted</span>
+                </div>
+                <p class="text-[11px] text-stone-500">Items requiring warehouse reorder</p>
+            </div>
+        </div>
+
+        {% if is_super_admin %}
+            <!-- Chart Analytics (Supreme Admin Only) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-stone-900/90 border border-stone-800 p-6 rounded-3xl shadow-xl space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-stone-300 flex items-center gap-2">
+                        <i data-lucide="pie-chart" class="w-4 h-4 text-emerald-400"></i>
+                        <span>Stock Valuation per Care Pillar (GHS)</span>
+                    </h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <canvas id="pillarValuationChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-stone-900/90 border border-stone-800 p-6 rounded-3xl shadow-xl space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-stone-300 flex items-center gap-2">
+                        <i data-lucide="bar-chart-3" class="w-4 h-4 text-emerald-400"></i>
+                        <span>SKU Distribution per Pillar</span>
+                    </h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <canvas id="pillarProductsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- 7 Pillars Product Catalog Command Center -->
+        <div class="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-stone-800">
+                <div>
+                    <h2 class="text-lg font-black text-white tracking-tight flex items-center gap-2">
+                        <i data-lucide="layout-grid" class="w-5 h-5 text-emerald-400"></i>
+                        <span>7 Product Pillars & Direct Inventory Addition</span>
+                    </h2>
+                    <p class="text-xs text-stone-400 mt-0.5">Add new catalog inventory directly into any of the 7 specialized Wellful pillars.</p>
+                </div>
+                <a href="{% url 'catalog:admin_product_create' %}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold transition self-start sm:self-auto">
+                    <i data-lucide="package-plus" class="w-4 h-4"></i>
+                    <span>Add Item to Any Pillar</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {% for category in categories %}
+                <div class="bg-stone-950 border border-stone-800 hover:border-emerald-500/50 rounded-2xl p-4 flex flex-col justify-between transition-all duration-200 group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                                Pillar 0{{ forloop.counter }}
+                            </span>
+                            <span class="text-xs font-bold text-stone-400">
+                                {{ category.products.count }} items
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-black text-white group-hover:text-emerald-400 transition">
+                                {{ category.name }}
+                            </h3>
+                            <p class="text-[11px] text-stone-400 line-clamp-2 mt-1 leading-relaxed">
+                                {{ category.description }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 mt-4 border-t border-stone-800/80 flex items-center justify-between gap-2">
+                        <a href="{% url 'catalog:category_detail' category.slug %}" target="_blank" class="text-[11px] font-bold text-stone-400 hover:text-white transition inline-flex items-center gap-1">
+                            <span>Store View</span>
+                            <i data-lucide="external-link" class="w-3 h-3"></i>
+                        </a>
+                        <a href="{% url 'catalog:admin_product_create' %}?category={{ category.id }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            <span>Add Product</span>
+                        </a>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-span-full py-8 text-center text-stone-500 text-xs">
+                    No pillars registered. Run database seeds to initialize categories.
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Incoming WhatsApp Orders & Doorstep Dispatch Pipeline -->
+        <div class="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-black text-white tracking-tight flex items-center gap-2">
+                        <i data-lucide="truck" class="w-5 h-5 text-emerald-400"></i>
+                        <span>Incoming WhatsApp Orders &amp; Doorstep Deliveries</span>
+                    </h2>
+                    <p class="text-xs text-stone-400 mt-0.5">Real-time orders received via WhatsApp checkout with GhanaPost GPS &amp; satellite pins.</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="border-b border-stone-800 text-stone-400 uppercase tracking-wider font-bold">
+                            <th class="py-3 px-4">Order Ref</th>
+                            <th class="py-3 px-4">Customer Details</th>
+                            <th class="py-3 px-4">Delivery GPS &amp; Satellite Pin</th>
+                            <th class="py-3 px-4">Items / Total</th>
+                            <th class="py-3 px-4">Fulfillment Status</th>
+                            <th class="py-3 px-4 text-right">Update Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-stone-800/60">
+                        {% for order in recent_orders %}
+                            <tr class="hover:bg-stone-800/40 transition">
+                                <td class="py-4 px-4 font-black text-white">#{{ order.order_number }}</td>
+                                <td class="py-4 px-4 text-stone-200">
+                                    <div class="font-bold text-white">{{ order.customer_name|default:order.user.username }}</div>
+                                    <a href="tel:{{ order.delivery_phone }}" class="text-[11px] text-emerald-400 hover:underline flex items-center gap-1 mt-0.5">
+                                        <i data-lucide="phone" class="w-3 h-3"></i>
+                                        <span>{{ order.delivery_phone }}</span>
+                                    </a>
+                                    {% if order.customer_email %}
+                                        <div class="text-[10px] text-stone-500">{{ order.customer_email }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="py-4 px-4 text-stone-300">
+                                    <div class="font-bold flex items-center gap-1 text-stone-200">
+                                        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
+                                        <span>{{ order.digital_address }}</span>
+                                    </div>
+                                    {% if order.google_maps_url %}
+                                        <a href="{{ order.google_maps_url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold transition">
+                                            <i data-lucide="navigation" class="w-3 h-3 text-emerald-400"></i>
+                                            <span>Open Satellite Pin</span>
+                                        </a>
+                                    {% endif %}
+                                    {% if order.delivery_notes %}
+                                        <div class="text-[10px] text-stone-500 mt-1 italic leading-tight">Note: {{ order.delivery_notes }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="py-4 px-4 text-stone-200">
+                                    <div class="font-black text-emerald-400">GHS {{ order.total_amount_ghs|floatformat:2 }}</div>
+                                    <div class="text-[10px] text-stone-500">
+                                        {% for item in order.items.all %}
+                                            {{ item.quantity }}x {{ item.product.name }}{% if not forloop.last %}, {% endif %}
+                                        {% empty %}
+                                            Direct Order
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider 
+                                        {% if order.status == 'DELIVERED' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/40
+                                        {% elif order.status == 'DISPATCHED' %}bg-sky-500/20 text-sky-300 border border-sky-500/40
+                                        {% elif order.status == 'PROCESSING' %}bg-amber-500/20 text-amber-300 border border-amber-500/40
+                                        {% else %}bg-stone-800 text-stone-300 border border-stone-700{% endif %}">
+                                        {{ order.get_status_display }}
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4 text-right">
+                                    <form method="post" action="{% url 'accounts:admin_update_order_status' order_id=order.id %}" class="inline-flex items-center gap-2">
+                                        {% csrf_token %}
+                                        <select name="status" class="bg-stone-950 border border-stone-700 text-stone-200 rounded-lg px-2.5 py-1 text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                                            {% for value, label in order_statuses %}
+                                                <option value="{{ value }}" {% if order.status == value %}selected{% endif %}>{{ label }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <button type="submit" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+                                            Save
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="6" class="py-8 text-center text-stone-500">No WhatsApp orders recorded yet.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Inventory Quick Adjustment Table -->
+        <div class="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-black text-white tracking-tight flex items-center gap-2">
+                        <i data-lucide="package-search" class="w-5 h-5 text-emerald-400"></i>
+                        <span>Warehouse Stock Levels & Quick Updates</span>
+                    </h2>
+                    <p class="text-xs text-stone-400 mt-0.5">Quickly adjust available stock numbers without accessing the Django ORM.</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="border-b border-stone-800 text-stone-400 uppercase tracking-wider font-bold">
+                            <th class="py-3 px-4">SKU / Product</th>
+                            <th class="py-3 px-4">Care Pillar</th>
+                            <th class="py-3 px-4">Price (GHS)</th>
+                            <th class="py-3 px-4">Status</th>
+                            <th class="py-3 px-4">Current Stock</th>
+                            <th class="py-3 px-4 text-center">Adjust Count</th>
+                            <th class="py-3 px-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-stone-800/60">
+                        {% for product in inventory_products %}
+                            <tr class="hover:bg-stone-800/40 transition">
+                                <td class="py-3 px-4">
+                                    <div class="font-bold text-white">{{ product.name }}</div>
+                                    <div class="text-[10px] text-stone-500">SKU: {{ product.sku }}</div>
+                                </td>
+                                <td class="py-3 px-4 text-stone-300">{{ product.category.name }}</td>
+                                <td class="py-3 px-4 font-bold text-white">GHS {{ product.price_ghs }}</td>
+                                <td class="py-3 px-4">
+                                    {% if product.stock_quantity == 0 %}
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-950 text-red-300 border border-red-500/40">Out of Stock</span>
+                                    {% elif product.is_low_stock %}
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-500/40">Low Stock</span>
+                                    {% else %}
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">Healthy</span>
+                                    {% endif %}
+                                </td>
+                                <td class="py-3 px-4 font-black text-white">{{ product.stock_quantity }}</td>
+                                <td class="py-3 px-4 text-center">
+                                    <form method="post" action="{% url 'accounts:admin_update_stock' product_id=product.id %}" class="inline-flex items-center gap-2">
+                                        {% csrf_token %}
+                                        <input type="number" name="stock_quantity" value="{{ product.stock_quantity }}" min="0" class="w-16 bg-stone-950 border border-stone-700 text-stone-100 rounded-lg px-2 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                                        <button type="submit" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+                                            Save
+                                        </button>
+                                    </form>
+                                </td>
+                                <td class="py-3 px-4 text-right">
+                                    <div class="inline-flex items-center gap-2">
+                                        <a href="{% url 'catalog:admin_product_edit' product_id=product.id %}" class="p-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-stone-300 hover:text-emerald-400 transition" title="Edit Product">
+                                            <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                        </a>
+                                        <form method="post" action="{% url 'catalog:admin_product_delete' product_id=product.id %}" onsubmit="return confirm('Are you sure you want to remove {{ product.name|escapejs }} from the catalog?');" class="inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="p-1.5 rounded-lg bg-stone-900 hover:bg-red-950 border border-stone-700 hover:border-red-500/40 text-stone-400 hover:text-red-400 transition" title="Delete Product">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7" class="py-8 text-center text-stone-500">No products configured in catalog.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if is_super_admin %}
+            <!-- Employee Privilege & Staff Access Governance (Supreme Admin Only) -->
+            <div class="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-lg font-black text-white tracking-tight flex items-center gap-2">
+                            <i data-lucide="user-cog" class="w-5 h-5 text-amber-400"></i>
+                            <span>Staff Governance & Employee Privilege Control</span>
+                        </h2>
+                        <p class="text-xs text-stone-400 mt-0.5">Grant or revoke employee admin permissions across the platform.</p>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="border-b border-stone-800 text-stone-400 uppercase tracking-wider font-bold">
+                                <th class="py-3 px-4">User</th>
+                                <th class="py-3 px-4">Email</th>
+                                <th class="py-3 px-4">Role Classification</th>
+                                <th class="py-3 px-4">Staff Status</th>
+                                <th class="py-3 px-4 text-right">Supreme Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-800/60">
+                            {% for staff_user in all_users %}
+                                <tr class="hover:bg-stone-800/40 transition">
+                                    <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                                        <span>{{ staff_user.username }}</span>
+                                        {% if staff_user.is_superuser %}
+                                            <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[9px] uppercase font-black">Supreme</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="py-3 px-4 text-stone-300">{{ staff_user.email }}</td>
+                                    <td class="py-3 px-4 text-emerald-400 font-bold">{{ staff_user.get_role_display }}</td>
+                                    <td class="py-3 px-4">
+                                        {% if staff_user.is_staff %}
+                                            <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                                                <i data-lucide="check" class="w-3.5 h-3.5"></i> Staff Authorized
+                                            </span>
+                                        {% else %}
+                                            <span class="text-stone-500">Regular Customer</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="py-3 px-4 text-right">
+                                        {% if not staff_user.is_superuser %}
+                                            <form method="post" action="{% url 'accounts:admin_toggle_staff' user_id=staff_user.id %}" class="inline-block">
+                                                {% csrf_token %}
+                                                {% if staff_user.is_staff %}
+                                                    <button type="submit" class="px-3 py-1 rounded-lg bg-red-950 hover:bg-red-900 border border-red-500/40 text-red-300 font-bold text-xs transition">
+                                                        Revoke Staff
+                                                    </button>
+                                                {% else %}
+                                                    <button type="submit" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+                                                        Promote to Staff
+                                                    </button>
+                                                {% endif %}
+                                            </form>
+                                        {% else %}
+                                            <span class="text-[10px] text-stone-600 font-bold uppercase">Locked</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Chart.js Activation Script -->
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const labels = {{ chart_pillar_labels|safe }};
+                    const valuations = {{ chart_pillar_valuations|safe }};
+                    const counts = {{ chart_pillar_counts|safe }};
+
+                    const emeraldPalette = [
+                        '#10b981', '#059669', '#047857', '#065f46',
+                        '#064e3b', '#34d399', '#6ee7b7'
+                    ];
+
+                    // Valuation Chart
+                    const ctxValuation = document.getElementById('pillarValuationChart');
+                    if (ctxValuation) {
+                        new Chart(ctxValuation, {
+                            type: 'doughnut',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    data: valuations,
+                                    backgroundColor: emeraldPalette,
+                                    borderColor: '#1c1917',
+                                    borderWidth: 2
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: { display: false }
+                                }
+                            }
+                        });
+                    }
+
+                    // Product Counts Chart
+                    const ctxProducts = document.getElementById('pillarProductsChart');
+                    if (ctxProducts) {
+                        new Chart(ctxProducts, {
+                            type: 'bar',
+                            data: {
+                                labels: labels.map(l => l.split(' ')[0]),
+                                datasets: [{
+                                    label: 'Products',
+                                    data: counts,
+                                    backgroundColor: '#10b981',
+                                    borderRadius: 8
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: { display: false }
+                                },
+                                scales: {
+                                    x: { ticks: { color: '#a8a29e' }, grid: { display: false } },
+                                    y: { ticks: { color: '#a8a29e' }, grid: { color: '#292524' } }
+                                }
+                            }
+                        });
+                    }
+                });
+            </script>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

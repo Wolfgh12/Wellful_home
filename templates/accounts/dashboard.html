@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+
+{% block title %}My Senior Wellness Command Dashboard | Wellful Home{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-stone-950 py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto space-y-10">
+        
+        <!-- Top Command Identity Header -->
+        <div class="bg-gradient-to-r from-brand-950 via-stone-900 to-brand-900 border border-emerald-500/30 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-xl">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                <div class="flex items-center gap-5">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-400 to-brand-800 p-0.5 shadow-xl">
+                        <div class="w-full h-full bg-stone-950 rounded-[14px] flex items-center justify-center text-emerald-400 font-black text-2xl uppercase">
+                            {{ user.username|slice:":2" }}
+                        </div>
+                    </div>
+                    <div class="space-y-1.5">
+                        <div class="flex items-center gap-2.5 flex-wrap">
+                            <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">{{ user.username }}</h1>
+                            <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                                {{ user.get_role_display }}
+                            </span>
+                        </div>
+                        <p class="text-xs text-stone-400 flex items-center gap-3 flex-wrap">
+                            <span class="flex items-center gap-1.5 text-stone-300">
+                                <i data-lucide="mail" class="w-3.5 h-3.5 text-emerald-400"></i>
+                                {{ user.email }}
+                            </span>
+                            {% if user.phone_number %}
+                                <span class="flex items-center gap-1.5 text-stone-300">
+                                    <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-400"></i>
+                                    {{ user.phone_number }}
+                                </span>
+                            {% endif %}
+                            {% if user.digital_address %}
+                                <span class="flex items-center gap-1.5 text-emerald-300 font-semibold bg-emerald-950/60 px-2.5 py-0.5 rounded-lg border border-emerald-500/30">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400"></i>
+                                    {{ user.digital_address }}
+                                </span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Concierge Action Links -->
+                <div class="flex items-center gap-3 self-start md:self-center">
+                    <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-black text-xs shadow-lg shadow-emerald-950/60 transition transform hover:-translate-y-0.5">
+                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                        <span>Explore Care Catalog</span>
+                    </a>
+                    <a href="tel:+233200000000" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-stone-200 border border-emerald-500/30 font-bold text-xs transition">
+                        <i data-lucide="phone-call" class="w-4 h-4 text-emerald-400"></i>
+                        <span class="hidden sm:inline">Concierge Hotline</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="bg-stone-900/80 border border-stone-800 hover:border-emerald-500/40 p-6 rounded-3xl shadow-xl transition space-y-2">
+                <div class="flex items-center justify-between text-stone-400">
+                    <span class="text-xs font-bold uppercase tracking-wider">Total Orders</span>
+                    <i data-lucide="package-check" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <div class="text-3xl font-black text-white">{{ total_orders_count }}</div>
+                <p class="text-[11px] text-stone-500">Orders placed on Wellful Home</p>
+            </div>
+
+            <div class="bg-stone-900/80 border border-stone-800 hover:border-emerald-500/40 p-6 rounded-3xl shadow-xl transition space-y-2">
+                <div class="flex items-center justify-between text-stone-400">
+                    <span class="text-xs font-bold uppercase tracking-wider">Delivered Provisions</span>
+                    <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <div class="text-3xl font-black text-emerald-400">{{ completed_orders_count }}</div>
+                <p class="text-[11px] text-stone-500">Certified doorstep deliveries</p>
+            </div>
+
+            <div class="bg-stone-900/80 border border-stone-800 hover:border-emerald-500/40 p-6 rounded-3xl shadow-xl transition space-y-2">
+                <div class="flex items-center justify-between text-stone-400">
+                    <span class="text-xs font-bold uppercase tracking-wider">Total Invested</span>
+                    <i data-lucide="coins" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black text-white">GHS {{ total_spent_ghs|floatformat:2 }}</div>
+                <p class="text-[11px] text-stone-500">Senior wellness & safety investment</p>
+            </div>
+
+            <div class="bg-stone-900/80 border border-stone-800 hover:border-emerald-500/40 p-6 rounded-3xl shadow-xl transition space-y-2">
+                <div class="flex items-center justify-between text-stone-400">
+                    <span class="text-xs font-bold uppercase tracking-wider">Recent Views</span>
+                    <i data-lucide="eye" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <div class="text-3xl font-black text-white">{{ viewed_products|length }}</div>
+                <p class="text-[11px] text-stone-500">Tracked products in session history</p>
+            </div>
+        </div>
+
+        <!-- Section 1: Recently Viewed Products -->
+        <div class="space-y-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                        <i data-lucide="sparkles" class="w-6 h-6 text-emerald-400"></i>
+                        <span>Recently Viewed Senior Provisions</span>
+                    </h2>
+                    <p class="text-xs text-stone-400 mt-0.5">Quickly revisit and add safety hardware or nutritionals you examined.</p>
+                </div>
+                <a href="{% url 'catalog:product_list' %}" class="text-xs font-bold text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1">
+                    <span>Full Catalog</span>
+                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                </a>
+            </div>
+
+            {% if viewed_products %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {% for product in viewed_products %}
+                        <div class="bg-stone-900 border border-stone-800 hover:border-emerald-500/50 rounded-3xl p-5 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_10px_30px_rgba(16,185,129,0.15)] group">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/30 text-emerald-300">
+                                        {{ product.category.name }}
+                                    </span>
+                                    {% if product.is_in_stock %}
+                                        <span class="text-[10px] font-semibold text-emerald-400 flex items-center gap-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> In Stock
+                                        </span>
+                                    {% else %}
+                                        <span class="text-[10px] font-semibold text-red-400 flex items-center gap-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span> Out of Stock
+                                        </span>
+                                    {% endif %}
+                                </div>
+
+                                <div>
+                                    <h3 class="font-bold text-white group-hover:text-emerald-400 transition text-sm line-clamp-2 leading-snug">
+                                        {{ product.name }}
+                                    </h3>
+                                    <p class="text-xs text-stone-400 mt-1 line-clamp-2">{{ product.description }}</p>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 mt-4 border-t border-stone-800/80 flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] text-stone-500 block uppercase font-bold">Price</span>
+                                    <span class="text-sm font-black text-white">GHS {{ product.price_ghs }}</span>
+                                </div>
+                                <a 
+                                    href="{% url 'catalog:product_detail' slug=product.slug %}" 
+                                    class="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-brand-950 text-xs font-black transition"
+                                >
+                                    <span>View</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="bg-stone-900/50 border border-dashed border-stone-800 rounded-3xl p-10 text-center space-y-3">
+                    <i data-lucide="compass" class="w-10 h-10 text-stone-600 mx-auto"></i>
+                    <h3 class="text-sm font-bold text-stone-300">No Viewed Products Yet</h3>
+                    <p class="text-xs text-stone-500 max-w-sm mx-auto">Browse through our seven core senior care pillars to explore certified installations, orthopedic footwear, and medical systems.</p>
+                    <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition">
+                        <span>Browse Catalog</span>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Section 2: Purchased Orders & Doorstep Delivery History -->
+        <div class="space-y-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                        <i data-lucide="truck" class="w-6 h-6 text-emerald-400"></i>
+                        <span>Order & Installation History</span>
+                    </h2>
+                    <p class="text-xs text-stone-400 mt-0.5">Track your orders, hardware dispatches, and on-site fitting visits across Ghana.</p>
+                </div>
+            </div>
+
+            {% if orders %}
+                <div class="space-y-4">
+                    {% for order in orders %}
+                        <div class="bg-stone-900 border border-stone-800 rounded-3xl p-6 transition space-y-4">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-stone-800">
+                                <div class="space-y-1">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-base font-black text-white">#{{ order.order_number }}</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider 
+                                            {% if order.status == 'DELIVERED' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/40
+                                            {% elif order.status == 'DISPATCHED' %}bg-sky-500/20 text-sky-300 border border-sky-500/40
+                                            {% elif order.status == 'PROCESSING' %}bg-amber-500/20 text-amber-300 border border-amber-500/40
+                                            {% else %}bg-stone-800 text-stone-300 border border-stone-700{% endif %}">
+                                            {{ order.get_status_display }}
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-stone-500">Ordered on {{ order.created_at|date:"F d, Y - h:i A" }}</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[10px] uppercase font-bold text-stone-500 block">Total Investment</span>
+                                    <span class="text-base font-black text-emerald-400">GHS {{ order.total_amount_ghs|floatformat:2 }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Items inside Order -->
+                            <div class="divide-y divide-stone-800/60">
+                                {% for item in order.items.all %}
+                                    <div class="py-3 flex items-center justify-between gap-4">
+                                        <div class="space-y-0.5">
+                                            <h4 class="text-sm font-bold text-white">{{ item.product.name }}</h4>
+                                            <p class="text-xs text-stone-400">Pillar: {{ item.product.category.name }} &bull; Quantity: {{ item.quantity }}</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-xs font-bold text-stone-200">GHS {{ item.subtotal_ghs|floatformat:2 }}</span>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <p class="text-xs text-stone-500 py-2">Item details updating from warehouse.</p>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Delivery GPS Footnote -->
+                            <div class="pt-3 border-t border-stone-800/60 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs text-stone-400">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400"></i>
+                                    <span>Dispatch Location: <strong>{{ order.digital_address }}</strong> (GhanaPost GPS)</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-400"></i>
+                                    <span>Contact: {{ order.delivery_phone }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="bg-stone-900/50 border border-dashed border-stone-800 rounded-3xl p-10 text-center space-y-3">
+                    <i data-lucide="shopping-cart" class="w-10 h-10 text-stone-600 mx-auto"></i>
+                    <h3 class="text-sm font-bold text-stone-300">No Orders Placed Yet</h3>
+                    <p class="text-xs text-stone-500 max-w-sm mx-auto">Once you check out with bathroom grab bars, medical surge safeguards, or vital sign diagnostics, your tracking updates will show up here.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Section 3: Verified Senior Address & Concierge Card -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Delivery Verification Card -->
+            <div class="bg-stone-900 border border-stone-800 p-6 sm:p-8 rounded-3xl space-y-4">
+                <div class="flex items-center gap-3 text-emerald-400">
+                    <i data-lucide="badge-check" class="w-6 h-6"></i>
+                    <h3 class="text-lg font-black text-white">Registered Doorstep Profile</h3>
+                </div>
+                <p class="text-xs text-stone-400 leading-relaxed">
+                    Our technical installation team references your verified GPS coordinates to transport heavy wellness hardware directly to the senior's residence.
+                </p>
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between py-2 border-b border-stone-800">
+                        <span class="text-stone-500">GhanaPost Digital Address</span>
+                        <span class="font-bold text-white">{{ user.digital_address|default:"Not specified" }}</span>
+                    </div>
+                    <div class="flex justify-between py-2 border-b border-stone-800">
+                        <span class="text-stone-500">Contact Number</span>
+                        <span class="font-bold text-white">{{ user.phone_number|default:"Not specified" }}</span>
+                    </div>
+                    <div class="flex justify-between py-2 border-b border-stone-800">
+                        <span class="text-stone-500">Account Classification</span>
+                        <span class="font-bold text-emerald-400">{{ user.get_role_display }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- On-Site Consultation & Support Card -->
+            <div class="bg-gradient-to-br from-brand-950 to-stone-900 border border-emerald-500/30 p-6 sm:p-8 rounded-3xl space-y-4">
+                <div class="flex items-center gap-3 text-emerald-400">
+                    <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                    <h3 class="text-lg font-black text-white">Direct Care Support</h3>
+                </div>
+                <p class="text-xs text-stone-300 leading-relaxed">
+                    Need on-site assessment for anti-slip flooring, walk-in bath rails, or backup battery surge systems for oxygen concentrators? Reach our medical technician team immediately.
+                </p>
+                <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                    <a href="tel:+233200000000" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-black text-xs shadow-md transition">
+                        <i data-lucide="phone-outgoing" class="w-4 h-4"></i>
+                        <span>Call +233 (0) 20 000 0000</span>
+                    </a>
+                    <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-stone-900 hover:bg-stone-800 border border-stone-700 text-stone-200 font-bold text-xs transition">
+                        <span>Browse 7 Care Pillars</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

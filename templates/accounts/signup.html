@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Account | Wellful Home{% endblock %}
+
+{% block content %}
+<div class="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-stone-900 via-brand-950 to-stone-950">
+    <div class="max-w-xl w-full space-y-8 bg-stone-900/90 border border-emerald-500/30 p-8 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-md">
+        
+        <!-- Header -->
+        <div class="text-center space-y-2">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 text-emerald-400 shadow-inner">
+                <i data-lucide="user-plus" class="w-7 h-7"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Create Customer Account</h2>
+            <p class="text-xs text-stone-400 leading-relaxed">
+                Register to track your orders, manage doorstep deliveries, and save consultation history.
+            </p>
+        </div>
+
+        <!-- Non-Field Validation Errors -->
+        {% if form.non_field_errors %}
+            <div class="bg-red-950/80 border border-red-500/40 rounded-2xl p-4 text-xs text-red-200 space-y-1">
+                {% for error in form.non_field_errors %}
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="alert-circle" class="w-4 h-4 text-red-400 shrink-0"></i>
+                        <span>{{ error }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Signup Form -->
+        <form method="post" novalidate class="mt-6 space-y-5">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <!-- Username -->
+                <div>
+                    <label for="{{ form.username.id_for_label }}" class="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-2">
+                        Username <span class="text-emerald-400">*</span>
+                    </label>
+                    <div class="relative [&>input]:w-full [&>input]:pl-10 [&>input]:pr-4 [&>input]:py-3 [&>input]:rounded-xl [&>input]:bg-stone-950 [&>input]:border [&>input]:border-stone-700 [&>input]:text-stone-100 [&>input]:placeholder-stone-500 [&>input]:focus:outline-none [&>input]:focus:ring-2 [&>input]:focus:ring-emerald-500 [&>input]:text-sm [&>input]:transition">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </div>
+                        {{ form.username }}
+                    </div>
+                    {% if form.username.errors %}
+                        <p class="mt-1 text-xs text-red-400">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Email Address -->
+                <div>
+                    <label for="{{ form.email.id_for_label }}" class="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-2">
+                        Email Address <span class="text-emerald-400">*</span>
+                    </label>
+                    <div class="relative [&>input]:w-full [&>input]:pl-10 [&>input]:pr-4 [&>input]:py-3 [&>input]:rounded-xl [&>input]:bg-stone-950 [&>input]:border [&>input]:border-stone-700 [&>input]:text-stone-100 [&>input]:placeholder-stone-500 [&>input]:focus:outline-none [&>input]:focus:ring-2 [&>input]:focus:ring-emerald-500 [&>input]:text-sm [&>input]:transition">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                        </div>
+                        {{ form.email }}
+                    </div>
+                    {% if form.email.errors %}
+                        <p class="mt-1 text-xs text-red-400">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Phone Number -->
+                <div>
+                    <label for="{{ form.phone_number.id_for_label }}" class="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-2">
+                        Phone Number
+                    </label>
+                    <div class="relative [&>input]:w-full [&>input]:pl-10 [&>input]:pr-4 [&>input]:py-3 [&>input]:rounded-xl [&>input]:bg-stone-950 [&>input]:border [&>input]:border-stone-700 [&>input]:text-stone-100 [&>input]:placeholder-stone-500 [&>input]:focus:outline-none [&>input]:focus:ring-2 [&>input]:focus:ring-emerald-500 [&>input]:text-sm [&>input]:transition">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                        </div>
+                        {{ form.phone_number }}
+                    </div>
+                    {% if form.phone_number.errors %}
+                        <p class="mt-1 text-xs text-red-400">{{ form.phone_number.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Digital Address -->
+                <div>
+                    <label for="{{ form.digital_address.id_for_label }}" class="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-2">
+                        GhanaPost GPS <span class="text-[10px] text-stone-400 font-normal lowercase">(optional)</span>
+                    </label>
+                    <div class="relative [&>input]:w-full [&>input]:pl-10 [&>input]:pr-4 [&>input]:py-3 [&>input]:rounded-xl [&>input]:bg-stone-950 [&>input]:border [&>input]:border-stone-700 [&>input]:text-stone-100 [&>input]:placeholder-stone-500 [&>input]:focus:outline-none [&>input]:focus:ring-2 [&>input]:focus:ring-emerald-500 [&>input]:text-sm [&>input]:transition">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        </div>
+                        {{ form.digital_address }}
+                    </div>
+                    {% if form.digital_address.errors %}
+                        <p class="mt-1 text-xs text-red-400">{{ form.digital_address.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="{{ form.password1.id_for_label }}" class="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-2">
+                        Password <span class="text-emerald-400">*</span>
+                    </label>
+                    <div class="relative [&>input]:w-full [&>input]:pl-10 [&>input]:pr-4 [&>input]:py-3 [&>input]:rounded-xl [&>input]:bg-stone-950 [&>input]:border [&>input]:border-stone-700 [&>input]:text-stone-100 [&>input]:placeholder-stone-500 [&>input]:focus:outline-none [&>input]:focus:ring-2 [&>input]:focus:ring-emerald-500 [&>input]:text-sm [&>input]:transition">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                            <i data-lucide="lock" class="w-4 h-4"></i>
+                        </div>
+                        {{ form.password1 }}
+                    </div>
+                    {% if form.password1.errors %}
+                        <p class="mt-1 text-xs text-red-400">{{ form.password1.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Confirm Password -->
+                <div>
+                    <label for="{{ form.password2.id_for_label }}" class="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-2">
+                        Confirm Password <span class="text-emerald-400">*</span>
+                    </label>
+                    <div class="relative [&>input]:w-full [&>input]:pl-10 [&>input]:pr-4 [&>input]:py-3 [&>input]:rounded-xl [&>input]:bg-stone-950 [&>input]:border [&>input]:border-stone-700 [&>input]:text-stone-100 [&>input]:placeholder-stone-500 [&>input]:focus:outline-none [&>input]:focus:ring-2 [&>input]:focus:ring-emerald-500 [&>input]:text-sm [&>input]:transition">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        </div>
+                        {{ form.password2 }}
+                    </div>
+                    {% if form.password2.errors %}
+                        <p class="mt-1 text-xs text-red-400">{{ form.password2.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+                type="submit" 
+                class="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-black text-sm shadow-lg shadow-emerald-950/60 transition transform hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-stone-900 focus:ring-emerald-500"
+            >
+                <span>Create Account</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+        </form>
+
+        <!-- Redirect to Sign-in -->
+        <div class="pt-6 border-t border-stone-800 text-center">
+            <p class="text-xs text-stone-400">
+                Already have an account? 
+                <a href="{% url 'accounts:login' %}" class="font-bold text-emerald-400 hover:text-emerald-300 transition">
+                    Sign in here
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
