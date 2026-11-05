@@ -82,20 +82,21 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
             
             <!-- Brand Logo & Replicated Typography -->
-            <a href="{% url 'home' %}" class="flex items-center space-x-4 group">
-                <!-- White Plaque with Enlarged Logo Graphic & Text -->
-                <div class="bg-white rounded-2xl px-4 py-2 sm:px-5 sm:py-2.5 shadow-xl flex items-center justify-center overflow-hidden border border-white/20">
+            <a href="{% url 'home' %}" class="flex items-center space-x-2.5 sm:space-x-4 group">
+                <!-- White Plaque with Enlarged Logo Graphic -->
+                <div class="bg-white rounded-2xl px-3 py-1.5 sm:px-5 sm:py-2.5 shadow-xl flex items-center justify-center overflow-hidden border border-white/20">
                     <img 
                         src="{% static 'images/wellful_home.jpg' %}" 
                         alt="wellfulhome logo" 
-                        class="h-11 sm:h-13 md:h-14 w-auto max-w-[180px] sm:max-w-[220px] object-contain scale-110 transform transition-transform duration-300 group-hover:scale-115"
+                        class="h-9 sm:h-13 md:h-14 w-auto max-w-[130px] sm:max-w-[220px] object-contain scale-110 transform transition-transform duration-300 group-hover:scale-115"
                     >
                 </div>
-                <div class="hidden sm:block">
-                    <span class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white block leading-none lowercase">
-                        wellful<span class="italic font-normal text-transparent" style="-webkit-text-stroke: 1.3px #ffffff;">home</span>
+                <!-- Brand Typography (Visible on Mobile & Desktop, Wellful Blackened, No Extra Background) -->
+                <div class="flex flex-col">
+                    <span class="text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-none lowercase">
+                        <span class="text-black">wellful</span><span class="italic font-normal text-white">home</span>
                     </span>
-                    <span class="text-[10px] tracking-widest uppercase font-bold text-emerald-400 block mt-1.5">Safe &amp; Comfortable Living</span>
+                    <span class="text-[8px] sm:text-[10px] tracking-widest uppercase font-bold text-emerald-400 block mt-1">Safe &amp; Comfortable Living</span>
                 </div>
             </a>
 
