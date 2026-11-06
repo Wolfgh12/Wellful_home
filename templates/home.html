@@ -156,18 +156,18 @@
 <section id="pillars" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <span class="text-xs uppercase font-extrabold tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-                Our Categories
-            </span>
-            <h2 class="text-3xl sm:text-4xl font-black text-brand-950 tracking-tight">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3.5">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100/90 border border-emerald-300 text-emerald-950 text-xs font-black uppercase tracking-widest shadow-2xs">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-700"></i>
+                <span>Safe &amp; Comfortable Living Hardware</span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-950 tracking-tight">
                 Browse by What You Need
             </h2>
-            <p class="text-sm text-stone-600 leading-relaxed">
-                Click on any category below to see available items, details, and clear prices in Ghanaian Cedis.
+            <p class="text-sm sm:text-base text-stone-600 leading-relaxed max-w-2xl mx-auto">
+                Essential wholesale hardware engineered for <strong class="text-stone-900 font-bold">safe and comfortable living</strong> across homes, institutions, and commercial facilities in Ghana.
             </p>
         </div>
-
         <!-- 3-Column Grid with Centered 7th Item Flanked by Wellful Home Logos -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             {% for category in categories %}
@@ -240,7 +240,7 @@
             <!-- Right Flanking Logo: Balances Row 3 -->
             <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
-                    src="{% static 'images/well_logo.jpg' %}" 
+                    src="{% static 'images/well_home.jpg' %}" 
                     alt="Wellful Home Logo" 
                     class="h-20 lg:h-28 w-auto max-w-full object-contain opacity-95 hover:opacity-100 transition-opacity"
                 >
