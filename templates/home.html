@@ -54,19 +54,19 @@
                     </div>
                 </div>
 
-                <!-- Fixed Stats Columns: Removed text collision and overflow lines -->
-                <div class="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 border-t border-emerald-300">
-                    <div class="pr-2">
-                        <div class="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">Wholesale Only</div>
-                        <div class="text-xs text-emerald-950 font-semibold mt-1">Bulk cartons &amp; cases</div>
+                <!-- Stats Badges (Clean Card Badges on Mobile, Column Separators on Desktop) -->
+                <div class="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-6 border-t border-emerald-300">
+                    <div class="p-3.5 sm:p-0 rounded-2xl bg-white/70 sm:bg-transparent border sm:border-0 border-emerald-200">
+                        <div class="text-lg sm:text-2xl font-black text-stone-900 tracking-tight">Wholesale Only</div>
+                        <div class="text-xs text-emerald-950 font-semibold mt-0.5">Bulk cartons &amp; cases</div>
                     </div>
-                    <div class="sm:border-l sm:border-emerald-300 sm:pl-5 pr-2">
-                        <div class="text-xl sm:text-2xl font-black text-emerald-800 tracking-tight">Nationwide</div>
-                        <div class="text-xs text-emerald-950 font-semibold mt-1">Freight waybill &amp; dispatch</div>
+                    <div class="p-3.5 sm:p-0 rounded-2xl bg-white/70 sm:bg-transparent border sm:border-0 border-emerald-200 sm:border-l sm:border-emerald-300 sm:pl-6">
+                        <div class="text-lg sm:text-2xl font-black text-emerald-800 tracking-tight">Nationwide</div>
+                        <div class="text-xs text-emerald-950 font-semibold mt-0.5">Freight waybill &amp; dispatch</div>
                     </div>
-                    <div class="sm:border-l sm:border-emerald-300 sm:pl-5">
-                        <div class="text-xl sm:text-2xl font-black text-amber-700 tracking-tight">Direct Importer</div>
-                        <div class="text-xs text-emerald-950 font-semibold mt-1">Factory-tested stock</div>
+                    <div class="p-3.5 sm:p-0 rounded-2xl bg-white/70 sm:bg-transparent border sm:border-0 border-emerald-200 sm:border-l sm:border-emerald-300 sm:pl-6">
+                        <div class="text-lg sm:text-2xl font-black text-amber-700 tracking-tight">Direct Importer</div>
+                        <div class="text-xs text-emerald-950 font-semibold mt-0.5">Factory-tested stock</div>
                     </div>
                 </div>
             </div>
@@ -176,33 +176,45 @@
             <!-- Left Flanking Logo: Centers the 7th Card on Row 3 -->
             <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
-                    src="{% static 'images/Wellful_logo.jpg' %}" 
+                    src="{% static 'images/well_home.jpg' %}" 
                     alt="Wellful Home Logo" 
                     class="h-20 lg:h-28 w-auto max-w-full object-contain opacity-95 hover:opacity-100 transition-opacity"
                 >
             </div>
             {% endif %}
 
-            <!-- Category Card -->
+            <!-- Category Card: Restyled for Mobile & Desktop -->
             <div class="group rounded-3xl overflow-hidden border-2 border-emerald-300/80 bg-white shadow-md hover:shadow-2xl hover:border-emerald-600 transition-all duration-300 flex flex-col justify-between h-full">
                 <div>
-                    <!-- Card Header (Balanced Mid-Deep Green Gradient) -->
-                    <div class="bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 p-6 border-b border-emerald-600 flex items-center justify-between gap-4">
-                        <div class="bg-white rounded-2xl px-6 py-4 shadow-md border border-white/40 flex items-center justify-center flex-1 max-w-[260px] min-h-[80px]">
-                            <img 
-                                src="{% static 'images/Wellful_logo.jpg' %}" 
-                                alt="{{ category.name }} Logo" 
-                                class="h-14 sm:h-16 md:h-18 w-auto max-w-full object-contain"
-                            >
+                    <!-- Card Header with Large Dedicated Logo Window -->
+                    <div class="bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 p-5 sm:p-7 border-b-2 border-emerald-600/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-lg border border-white/60 flex items-center justify-center w-full sm:flex-1 min-h-[110px] sm:min-h-[120px] overflow-hidden">
+                            {% if 'care' in category.slug or 'care' in category.name|lower %}
+                                <img src="{% static 'images/pillars/well_care.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                            {% elif 'data' in category.slug or 'data' in category.name|lower %}
+                                <img src="{% static 'images/pillars/well_data.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                            {% elif 'device' in category.slug or 'device' in category.name|lower %}
+                                <img src="{% static 'images/pillars/well_devices.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                            {% elif 'fit' in category.slug or 'fit' in category.name|lower %}
+                                <img src="{% static 'images/pillars/well_fit.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                            {% elif 'food' in category.slug or 'food' in category.name|lower %}
+                                <img src="{% static 'images/pillars/well_food.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                            {% elif 'san' in category.slug or 'san' in category.name|lower %}
+                                <img src="{% static 'images/pillars/well_san.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                            {% elif 'sole' in category.slug or 'sole' in category.name|lower %}
+                                <img src="{% static 'images/pillars/well_sole.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                            {% else %}
+                                <img src="{% static 'images/well_logo.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                            {% endif %}
                         </div>
-                        <span class="text-[11px] font-black tracking-widest uppercase text-white bg-emerald-900/80 border border-emerald-400/50 px-3 py-1 rounded-full shrink-0 shadow-xs">
-                            0{{ forloop.counter }}
+                        <span class="self-end sm:self-center text-xs font-black tracking-widest uppercase text-white bg-emerald-950/90 border border-emerald-400/60 px-3.5 py-1.5 rounded-full shrink-0 shadow-xs">
+                            Pillar 0{{ forloop.counter }}
                         </span>
                     </div>
 
-                    <!-- Category Plain English Copy -->
-                    <div class="p-7 space-y-3">
-                        <h3 class="text-xl font-black text-stone-950 leading-snug group-hover:text-emerald-800 transition">
+                    <!-- Category Content -->
+                    <div class="p-6 sm:p-7 space-y-2.5">
+                        <h3 class="text-xl sm:text-2xl font-black text-stone-950 leading-snug group-hover:text-emerald-800 transition">
                             {{ category.name }}
                         </h3>
 
@@ -228,7 +240,7 @@
             <!-- Right Flanking Logo: Balances Row 3 -->
             <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
-                    src="{% static 'images/Wellful_logo.jpg' %}" 
+                    src="{% static 'images/well_logo.jpg' %}" 
                     alt="Wellful Home Logo" 
                     class="h-20 lg:h-28 w-auto max-w-full object-contain opacity-95 hover:opacity-100 transition-opacity"
                 >
