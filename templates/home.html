@@ -4,9 +4,9 @@
 {% block title %}Wellful Home | Safe, Comfortable & Healthy Living in Ghana{% endblock %}
 
 {% block content %}
-<!-- Hero Section (Balanced Mid-Green & Sage - Rich, Inviting Contrast) -->
-<section class="relative bg-gradient-to-br from-emerald-100/90 via-teal-100/60 to-emerald-50/80 text-stone-900 pt-12 pb-20 lg:pt-16 lg:pb-24 overflow-hidden border-b border-emerald-300/80">
-    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[380px] bg-emerald-300/40 rounded-full blur-[130px] pointer-events-none"></div>
+<!-- Hero Section (Medium Sage-Jade Gradient: Richer Presence, Balanced Depth) -->
+<section class="relative bg-gradient-to-br from-emerald-200/80 via-teal-100/70 to-emerald-100 text-stone-950 pt-12 pb-20 lg:pt-16 lg:pb-24 overflow-hidden border-b border-emerald-400/60 shadow-inner">
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[400px] bg-emerald-400/35 rounded-full blur-[130px] pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -39,22 +39,19 @@
                     Reliable safety and wellness hardware available in single units or carton wholesale: high-traction non-slip shoes, surge protectors for appliances, sanitary rails, clean hygiene supplies, and certified health monitors.
                 </p>
 
+                <!-- Clear Direct Actions (Retail & Wholesale Selected Directly Per Product) -->
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-                    <a href="#pillars" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl bg-emerald-700 hover:bg-emerald-600 text-white font-black text-sm shadow-lg shadow-emerald-800/25 transition transform hover:-translate-y-0.5">
+                    <a href="#pillars" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-emerald-700 hover:bg-emerald-600 text-white font-black text-sm shadow-lg shadow-emerald-900/25 transition transform hover:-translate-y-0.5">
                         <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                        <span>Browse Catalog</span>
+                        <span>Explore Our Products</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
 
-                    <a href="https://wa.me/233268229696?text=Hello%20Wellful%20Home%2C%20I%20am%20inquiring%20about%20Wholesale%20and%20Bulk%20purchases." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-teal-800 hover:bg-teal-700 text-white font-black text-sm shadow-md transition transform hover:-translate-y-0.5">
-                        <i data-lucide="layers" class="w-4 h-4 text-emerald-300"></i>
-                        <span>Wholesale / Bulk Inquiries</span>
-                    </a>
-
-                    <a href="https://wa.me/233268229696?text=Hello%20Wellful%20Home%2C%20I%20want%20to%20order%20some%20items." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-white hover:bg-emerald-100/50 text-emerald-950 font-bold text-sm border-2 border-emerald-400 shadow-sm transition">
-                        <i data-lucide="message-square" class="w-4 h-4 text-emerald-700"></i>
-                        <span>Retail Order</span>
-                    </a>
+                    <!-- Informational Non-Clickable Supply Pill -->
+                    <div class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white/95 border-2 border-emerald-400/80 text-emerald-950 text-xs font-bold shadow-xs select-none">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-700 shrink-0"></i>
+                        <span>Retail single units &amp; carton wholesale applied on checkout</span>
+                    </div>
                 </div>
 
                 <div class="pt-6 grid grid-cols-3 gap-4 border-t border-emerald-300">
@@ -174,9 +171,9 @@
             
             {% if forloop.last %}
             <!-- Left Flanking Logo: Centers the 7th Card on Row 3 -->
-            <div class="hidden md:flex items-center justify-center p-6 bg-stone-50 rounded-3xl border border-stone-200/80 shadow-sm h-full">
+            <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
-                    src="{% static 'images/pillars/wellful_home.jpg' %}" 
+                    src="{% static 'images/Wellful_logo.jpg' %}" 
                     alt="Wellful Home Logo" 
                     class="h-20 lg:h-28 w-auto max-w-full object-contain opacity-95 hover:opacity-100 transition-opacity"
                 >
@@ -184,29 +181,29 @@
             {% endif %}
 
             <!-- Category Card -->
-            <div class="group rounded-3xl overflow-hidden border-2 border-emerald-200 bg-white shadow-sm hover:shadow-xl hover:border-emerald-500 transition-all duration-300 flex flex-col justify-between h-full">
+            <div class="group rounded-3xl overflow-hidden border-2 border-emerald-300/80 bg-white shadow-md hover:shadow-2xl hover:border-emerald-600 transition-all duration-300 flex flex-col justify-between h-full">
                 <div>
-                    <!-- Card Header (Richer Mid-Green Sage Gradient - Definite Green without Darkness) -->
-                    <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 p-6 border-b border-emerald-500 flex items-center justify-between gap-4">
-                        <div class="bg-white rounded-2xl px-6 py-4 shadow-md border border-white/60 flex items-center justify-center flex-1 max-w-[260px] min-h-[80px]">
+                    <!-- Card Header (Balanced Mid-Deep Green Gradient) -->
+                    <div class="bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 p-6 border-b border-emerald-600 flex items-center justify-between gap-4">
+                        <div class="bg-white rounded-2xl px-6 py-4 shadow-md border border-white/40 flex items-center justify-center flex-1 max-w-[260px] min-h-[80px]">
                             <img 
-                                src="{% static 'images/pillars/' %}{{ category.icon }}" 
+                                src="{% static 'images/Wellful_logo.jpg' %}" 
                                 alt="{{ category.name }} Logo" 
-                                class="h-14 sm:h-16 md:h-20 w-auto max-w-full object-contain"
+                                class="h-14 sm:h-16 md:h-18 w-auto max-w-full object-contain"
                             >
                         </div>
-                        <span class="text-[11px] font-black tracking-widest uppercase text-emerald-950 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full shrink-0 shadow-xs">
+                        <span class="text-[11px] font-black tracking-widest uppercase text-white bg-emerald-900/80 border border-emerald-400/50 px-3 py-1 rounded-full shrink-0 shadow-xs">
                             0{{ forloop.counter }}
                         </span>
                     </div>
 
                     <!-- Category Plain English Copy -->
                     <div class="p-7 space-y-3">
-                        <h3 class="text-xl font-black text-stone-950 leading-snug group-hover:text-emerald-700 transition">
+                        <h3 class="text-xl font-black text-stone-950 leading-snug group-hover:text-emerald-800 transition">
                             {{ category.name }}
                         </h3>
 
-                        <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+                        <p class="text-xs sm:text-sm text-stone-700 leading-relaxed font-medium">
                             {{ category.description }}
                         </p>
                     </div>
@@ -215,26 +212,25 @@
                 <!-- Footer Action -->
                 <div class="p-7 pt-0">
                     <div class="pt-4 border-t border-emerald-100 flex items-center justify-between">
-                        <a href="{% url 'catalog:category_detail' category.slug %}" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 group-hover:text-emerald-600 transition">
+                        <a href="{% url 'catalog:category_detail' category.slug %}" class="inline-flex items-center gap-1.5 text-xs font-black text-emerald-800 group-hover:text-emerald-950 transition">
                             <span>Browse Department</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition"></i>
                         </a>
-                        <span class="text-[11px] text-emerald-900 font-bold bg-emerald-100/90 px-2.5 py-0.5 rounded-full border border-emerald-200">In Stock</span>
+                        <span class="text-[11px] text-emerald-950 font-extrabold bg-emerald-100 px-3 py-0.5 rounded-full border border-emerald-300">In Stock</span>
                     </div>
                 </div>
             </div>
 
             {% if forloop.last %}
             <!-- Right Flanking Logo: Balances Row 3 -->
-            <div class="hidden md:flex items-center justify-center p-6 bg-stone-50 rounded-3xl border border-stone-200/80 shadow-sm h-full">
+            <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
-                    src="{% static 'images/pillars/wellful_home.jpg' %}" 
+                    src="{% static 'images/Wellful_logo.jpg' %}" 
                     alt="Wellful Home Logo" 
                     class="h-20 lg:h-28 w-auto max-w-full object-contain opacity-95 hover:opacity-100 transition-opacity"
                 >
             </div>
             {% endif %}
-
             {% empty %}
             <div class="col-span-3 text-center py-12 text-stone-500 text-sm">
                 Categories are loading. Check back shortly.
@@ -260,15 +256,15 @@
                 <p class="text-emerald-100/80 text-sm leading-relaxed">
                     Whether you are ordering 1 item for your household or 50 cartons for your pharmacy, hardware store, or clinic, we make procurement simple. No rigid account creation required.
                 </p>
-                <div class="flex flex-wrap gap-3 pt-2">
+                <div class="flex flex-wrap items-center gap-3 pt-2">
                     <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-black text-xs shadow-md transition">
                         <span>Browse Catalog</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
-                    <a href="https://wa.me/233268229696?text=Hello%20Wellful%20Home%2C%20please%20send%20your%20wholesale%20price%20list." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-200 font-bold text-xs transition">
-                        <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-400"></i>
-                        <span>Request Wholesale Price List</span>
-                    </a>
+                    <div class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-900/80 border border-emerald-500/40 text-emerald-200 font-semibold text-xs select-none">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                        <span>Individual &amp; carton pricing available on every item</span>
+                    </div>
                 </div>
             </div>
 
@@ -326,31 +322,21 @@
 
             <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full lg:w-auto">
                 <a 
-                    href="https://wa.me/233268229696?text=Hello%20Wellful%20Home%2C%20I%20am%20interested%20in%20Wholesale%20pricing." 
+                    href="https://wa.me/233268229696?text=Hello%20Wellful%20Home%2C%20I%20have%20an%20order%20inquiry." 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    class="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3.5 rounded-xl bg-teal-800 hover:bg-teal-700 text-white font-black text-sm shadow-md transition"
-                >
-                    <i data-lucide="boxes" class="w-4 h-4 text-emerald-300"></i>
-                    <span>Wholesale Desk</span>
-                </a>
-
-                <a 
-                    href="https://wa.me/233268229696?text=Hello%20Wellful%20Home%2C%20I%20want%20to%20place%20a%20retail%20order." 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-md transition"
+                    class="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-black text-sm shadow-md transition"
                 >
                     <i data-lucide="message-square" class="w-4 h-4"></i>
-                    <span>Retail Order</span>
+                    <span>Order via WhatsApp</span>
                 </a>
                 
                 <a 
                     href="tel:+233268229696" 
-                    class="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-3.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-sm border border-emerald-300 transition"
+                    class="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-sm border-2 border-emerald-300 transition"
                 >
                     <i data-lucide="phone" class="w-4 h-4 text-emerald-700"></i>
-                    <span>Call Sales</span>
+                    <span>Call Helpline: +233 (0) 26 822 9696</span>
                 </a>
             </div>
 
