@@ -1,13 +1,32 @@
-const CACHE_NAME = 'wellful-home-v1';
+// Static assets: Cache-first
+if (event.request.url.includes('/static/')) {
+    event.respondWith(
+        caches.match(event.request).then((cachedResponse) => {
+            return cachedResponse || fetch(event.request)...
+```[cite: 34]
+
+Because it is set to **Cache-First**, the service worker intercepted your earlier image requests when the files were 404ing or missing and stored those broken responses[cite: 34]. On every normal reload, it reads directly from the cache rather than asking your server[cite: 34].
+
+Here is the complete updated code for **`templates/sw.js`** (or your root service worker file)[cite: 34]. It bumps the cache to `'wellful-home-v4'`, purges all legacy caches immediately on activate, and switches static assets to a **Network-First** strategy with caching so you never get trapped with stale 404s again[cite: 34].
+
+### `templates/sw.js` (Complete File)
+
+```javascript
+const CACHE_NAME = 'wellful-home-v4';
 const STATIC_ASSETS = [
     '/',
     '/static/manifest.json',
-    '/static/images/icons/icon-192x192.png',
-    '/static/images/icons/icon-512x512.png',
-    '/static/images/icons/apple-touch-icon.png'
+    '/static/images/well_logo.jpg',
+    '/static/images/pillars/well_care.jpg',
+    '/static/images/pillars/well_data.jpg',
+    '/static/images/pillars/well_devices.jpg',
+    '/static/images/pillars/well_fit.jpg',
+    '/static/images/pillars/well_food.jpg',
+    '/static/images/pillars/well_san.jpg',
+    '/static/images/pillars/well_sole.jpg'
 ];
 
-// Install Event: Pre-cache shell assets
+// Install Event: Cache essential shell assets
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
@@ -17,7 +36,7 @@ self.addEventListener('install', (event) => {
     self.skipWaiting();
 });
 
-// Activate Event: Clean old caches
+// Activate Event: Wipe every older cache version immediately
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((keys) => {
@@ -28,41 +47,29 @@ self.addEventListener('activate', (event) => {
                     }
                 })
             );
-        })
+        }).then(() => self.clients.claim())
     );
-    self.clients.claim();
 });
 
-// Fetch Event: Network-first for fresh catalog data, fallback to cache
+// Fetch Event: Network-First across all assets to prevent stale image 404s
 self.addEventListener('fetch', (event) => {
-    // Only handle GET requests
     if (event.request.method !== 'GET') return;
 
-    // Static assets: Cache-first
-    if (event.request.url.includes('/static/')) {
-        event.respondWith(
-            caches.match(event.request).then((cachedResponse) => {
-                return cachedResponse || fetch(event.request).then((networkResponse) => {
-                    return caches.open(CACHE_NAME).then((cache) => {
-                        cache.put(event.request, networkResponse.clone());
-                        return networkResponse;
-                    });
-                });
-            })
-        );
-        return;
-    }
-
-    // Web pages: Network-first with offline fallback
     event.respondWith(
         fetch(event.request)
             .then((networkResponse) => {
-                const responseClone = networkResponse.clone();
-                caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, responseClone);
-                });
+                // Only cache valid 200 OK responses
+                if (networkResponse && networkResponse.status === 200) {
+                    const responseClone = networkResponse.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, responseClone);
+                    });
+                }
                 return networkResponse;
             })
-            .catch(() => caches.match(event.request))
+            .catch(() => {
+                // Fallback to cache only when truly offline or disconnected
+                return caches.match(event.request);
+            })
     );
 });
