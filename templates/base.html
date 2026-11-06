@@ -20,9 +20,9 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="675">
 
-    <!-- PWA Web App Manifest & Android Theme Color -->
+    <!-- PWA Web App Manifest & Mid-Sage Status Bar Theme -->
     <link rel="manifest" href="{% static 'manifest.json' %}">
-    <meta name="theme-color" content="#052e16">
+    <meta name="theme-color" content="#0f766e">
 
     <!-- iOS Safari Native Standalone Web App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,10 +49,15 @@
                         brand: {
                             50: '#f0fdf4',
                             100: '#dcfce7',
-                            500: '#22c55e',
-                            800: '#166534',
-                            900: '#14532d',
-                            950: '#052e16',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22',
                         },
                         amber: {
                             500: '#f59e0b',
@@ -64,75 +69,75 @@
         }
     </script>
 </head>
-<body class="bg-stone-50 text-stone-900 font-sans antialiased selection:bg-brand-100 selection:text-brand-900">
+<body class="bg-gradient-to-b from-emerald-100/30 via-stone-50 to-teal-100/20 text-stone-900 font-sans antialiased selection:bg-emerald-300 selection:text-emerald-950">
 
-    <!-- Top Assistance & Nationwide Logistics Bar (Mobile Clean Single Line) -->
-    <div class="bg-brand-950 text-stone-200 text-[11px] sm:text-xs py-2 px-3 sm:px-4 border-b border-brand-900">
+    <!-- Top Assistance & Nationwide Logistics Bar (Balanced Mid-Tone Forest/Sage) -->
+    <div class="bg-emerald-800 text-emerald-50 text-[11px] sm:text-xs py-2 px-3 sm:px-4 border-b border-emerald-900/40 shadow-xs">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1.5 sm:gap-2 text-center sm:text-left">
             <div class="flex items-center justify-center space-x-2">
-                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-                <span class="font-medium text-stone-200">Doorstep Delivery Across Accra, Tema &amp; Nationwide</span>
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-300 animate-pulse shrink-0"></span>
+                <span class="font-semibold text-emerald-100">Doorstep Delivery Across Accra, Tema &amp; Nationwide</span>
             </div>
             <div class="flex items-center justify-center gap-3 sm:gap-6">
-                <span class="hidden md:inline text-stone-400">Tested Hardware &amp; Direct Assistance</span>
-                <a href="tel:+233268229696" class="text-emerald-400 sm:text-stone-200 hover:text-emerald-400 font-bold flex items-center gap-1.5 transition whitespace-nowrap">
-                    <i data-lucide="phone-call" class="w-3 h-3 text-emerald-400 shrink-0"></i>
+                <span class="hidden md:inline text-emerald-200/90 font-medium">Tested Hardware &amp; Direct Assistance</span>
+                <a href="tel:+233268229696" class="text-white hover:text-emerald-200 font-black flex items-center gap-1.5 transition whitespace-nowrap">
+                    <i data-lucide="phone-call" class="w-3 h-3 text-emerald-300 shrink-0"></i>
                     <span>Help Hotline: +233 (0) 26 822 9696</span>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Main Navigation Header -->
-    <header class="sticky top-0 z-50 bg-gradient-to-r from-brand-950 via-brand-900 to-emerald-950 border-b border-emerald-900/60 shadow-xl">
+    <!-- Main Navigation Header (Mid-Tone Emerald & Sage Gradient - Richer, Crisp Contrast) -->
+    <header class="sticky top-0 z-50 bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 text-white border-b border-emerald-600/70 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
             
             <!-- Brand Logo & Replicated Typography -->
             <a href="{% url 'home' %}" class="flex items-center space-x-2.5 sm:space-x-4 group">
                 <!-- White Plaque with Enlarged Logo Graphic -->
-                <div class="bg-white rounded-2xl px-3.5 py-2 sm:px-5 sm:py-2.5 shadow-xl flex items-center justify-center overflow-hidden border border-white/20">
+                <div class="bg-white rounded-2xl px-3.5 py-2 sm:px-5 sm:py-2.5 shadow-md flex items-center justify-center overflow-hidden border border-emerald-400/40 group-hover:border-white transition">
                     <img 
-                        src="{% static 'images/wellful_home.jpg' %}" 
+                        src="{% static 'images/pillars/wellful_home.jpg' %}" 
                         alt="wellfulhome logo" 
                         class="h-10 sm:h-13 md:h-14 w-auto max-w-[140px] sm:max-w-[220px] object-contain scale-110 transform transition-transform duration-300 group-hover:scale-115"
                     >
                 </div>
-                <!-- Brand Typography (Bigger & Bolder on Mobile, Logo-Matched Hollow Outline 'home') -->
+                <!-- Brand Typography (Wellful in Black Pill, Home in Hollow White Outline) -->
                 <div class="flex flex-col justify-center">
                     <span class="text-xl sm:text-2xl md:text-3xl font-black tracking-tight leading-none lowercase">
-                        <span class="text-black font-black">wellful</span><span class="italic font-normal text-transparent" style="-webkit-text-stroke: 1.3px #ffffff;">home</span>
+                        <span class="text-stone-950 bg-white/95 px-2 py-0.5 rounded-lg shadow-xs font-black">wellful</span><span class="italic font-normal text-transparent ml-1" style="-webkit-text-stroke: 1.4px #ffffff;">home</span>
                     </span>
-                    <span class="text-[9px] sm:text-[10px] tracking-widest uppercase font-extrabold text-emerald-400 block mt-1.5">Safe &amp; Comfortable Living</span>
+                    <span class="text-[9px] sm:text-[10px] tracking-widest uppercase font-extrabold text-emerald-200 block mt-1.5">Safe &amp; Comfortable Living</span>
                 </div>
             </a>
 
             <!-- Navigation Links -->
-            <nav class="hidden md:flex items-center space-x-2 text-sm font-semibold">
+            <nav class="hidden md:flex items-center space-x-2 text-sm font-bold">
                 <a 
                     href="{% url 'home' %}" 
-                    class="group relative px-4 py-2 rounded-xl text-stone-200 hover:text-white transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400/50 border {% if request.path == '/' %}bg-emerald-500/25 border-emerald-400/60 text-white shadow-[0_0_15px_rgba(16,185,129,0.35)]{% else %}border-transparent{% endif %}"
+                    class="group relative px-4 py-2 rounded-xl transition-all duration-300 {% if request.path == '/' %}bg-emerald-950/40 text-white border border-emerald-300/40 shadow-xs{% else %}text-emerald-100 hover:bg-emerald-600/50 hover:text-white{% endif %}"
                 >
                     <span>Home</span>
                 </a>
 
                 <a 
                     href="{% if user.is_staff or user.is_superuser %}{% url 'accounts:admin_dashboard' %}{% else %}{% url 'accounts:admin_login' %}{% endif %}" 
-                    class="group relative px-4 py-2 rounded-xl text-stone-200 hover:text-white transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400/50 border {% if '/portal/' in request.path %}bg-emerald-500/25 border-emerald-400/60 text-white shadow-[0_0_15px_rgba(16,185,129,0.35)]{% else %}border-transparent{% endif %}"
+                    class="group relative px-4 py-2 rounded-xl transition-all duration-300 {% if '/portal/' in request.path %}bg-emerald-950/40 text-white border border-emerald-300/40 shadow-xs{% else %}text-emerald-100 hover:bg-emerald-600/50 hover:text-white{% endif %}"
                 >
                     <span class="flex items-center gap-1.5">
-                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
                         <span>Admin</span>
                     </span>
                 </a>
                 <a 
                     href="/#about" 
-                    class="group relative px-4 py-2 rounded-xl text-stone-200 hover:text-white transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400/50 border border-transparent hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                    class="group relative px-4 py-2 rounded-xl text-emerald-100 hover:bg-emerald-600/50 hover:text-white transition"
                 >
                     <span>About Us</span>
                 </a>
                 <a 
                     href="/#contact" 
-                    class="group relative px-4 py-2 rounded-xl text-stone-200 hover:text-white transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400/50 border border-transparent hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                    class="group relative px-4 py-2 rounded-xl text-emerald-100 hover:bg-emerald-600/50 hover:text-white transition"
                 >
                     <span>Contact</span>
                 </a>
@@ -145,11 +150,11 @@
                         <!-- Clickable Dashboard Identity Badge -->
                         <a 
                             href="{% if user.is_staff or user.is_superuser %}{% url 'accounts:admin_dashboard' %}{% else %}{% url 'accounts:customer_dashboard' %}{% endif %}" 
-                            class="group flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-500/40 hover:border-emerald-400 text-right transition shadow-sm hover:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                            class="group flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-emerald-900/60 hover:bg-emerald-900/90 border border-emerald-400/50 text-right transition shadow-xs"
                             title="Open Dashboard"
                         >
                             <div class="text-right hidden sm:block">
-                                <span class="text-[10px] font-black uppercase tracking-wider text-emerald-400 group-hover:text-emerald-300 block">
+                                <span class="text-[10px] font-black uppercase tracking-wider text-emerald-300 block">
                                     {% if user.is_superuser %}
                                         Supreme Admin
                                     {% elif user.is_staff %}
@@ -158,65 +163,65 @@
                                         {{ user.get_role_display }}
                                     {% endif %}
                                 </span>
-                                <span class="text-xs font-black text-white group-hover:text-emerald-200 leading-tight block">{{ user.username }}</span>
+                                <span class="text-xs font-black text-white leading-tight block">{{ user.username }}</span>
                             </div>
-                            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 group-hover:bg-emerald-500 group-hover:text-brand-950 text-emerald-400 flex items-center justify-center transition shrink-0">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center transition shrink-0">
                                 <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
                             </div>
                         </a>
 
-                        <a href="{% url 'accounts:logout' %}" class="text-xs text-stone-300 hover:text-red-400 px-2 py-1 font-semibold transition" title="Log Out">
+                        <a href="{% url 'accounts:logout' %}" class="text-xs text-emerald-200 hover:text-red-300 px-2 py-1 font-semibold transition" title="Log Out">
                             <i data-lucide="log-out" class="w-4 h-4"></i>
                         </a>
                     </div>
                 {% endif %}
 
-                <button id="navInstallBtn" type="button" onclick="triggerAndroidInstall()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-300 text-xs font-bold transition">
-                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <button id="navInstallBtn" type="button" onclick="triggerAndroidInstall()" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-900/60 border border-emerald-400/50 hover:bg-emerald-900 text-emerald-100 text-xs font-black shadow-xs transition">
+                    <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-300"></i>
                     <span>Install App</span>
                 </button>
 
-                <a href="{% url 'catalog:product_list' %}" class="hidden sm:inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-black text-sm shadow-md transition transform hover:-translate-y-0.5">
+                <a href="{% url 'catalog:product_list' %}" class="hidden sm:inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-900 font-black text-sm shadow-md transition transform hover:-translate-y-0.5">
                     <span>Explore Catalog</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-emerald-700"></i>
                 </a>
 
                 <!-- Mobile Hamburger Toggle Button -->
-                <button id="mobileMenuBtn" type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 hover:text-white transition" aria-label="Toggle Navigation Menu">
+                <button id="mobileMenuBtn" type="button" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl bg-emerald-800/80 border border-emerald-500/60 text-white hover:bg-emerald-700 transition" aria-label="Toggle Navigation Menu">
                     <i id="menuIconClosed" data-lucide="menu" class="w-6 h-6"></i>
                     <i id="menuIconOpen" data-lucide="x" class="w-6 h-6 hidden"></i>
                 </button>
             </div>
         </div> 
 
-        <!-- Mobile Drawer Navigation Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-brand-950/98 border-t border-emerald-900/60 px-5 py-6 space-y-4 shadow-2xl backdrop-blur-xl">
-            <nav class="flex flex-col space-y-2 text-sm font-semibold">
-                <a href="{% url 'home' %}" class="px-4 py-2.5 rounded-xl text-stone-200 hover:text-white hover:bg-emerald-500/20 border border-transparent hover:border-emerald-500/40 transition">
+        <!-- Mobile Drawer Navigation Menu (Mid-Green Shade) -->
+        <div id="mobileMenu" class="hidden md:hidden bg-emerald-800/98 border-t border-emerald-600 px-5 py-6 space-y-4 shadow-xl backdrop-blur-xl">
+            <nav class="flex flex-col space-y-2 text-sm font-bold">
+                <a href="{% url 'home' %}" class="px-4 py-2.5 rounded-xl text-white hover:bg-emerald-700/80 transition">
                     Home
                 </a>
-                <a href="{% url 'catalog:product_list' %}" class="px-4 py-2.5 rounded-xl bg-emerald-500 text-brand-950 font-black flex items-center justify-between">
+                <a href="{% url 'catalog:product_list' %}" class="px-4 py-2.5 rounded-xl bg-white text-emerald-950 font-black flex items-center justify-between shadow-xs">
                     <span>Explore Catalog</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
-                <a href="{% if user.is_staff or user.is_superuser %}{% url 'accounts:admin_dashboard' %}{% else %}{% url 'accounts:admin_login' %}{% endif %}" class="px-4 py-2.5 rounded-xl text-stone-200 hover:text-white hover:bg-emerald-500/20 border border-transparent hover:border-emerald-500/40 flex items-center gap-2 transition">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                <a href="{% if user.is_staff or user.is_superuser %}{% url 'accounts:admin_dashboard' %}{% else %}{% url 'accounts:admin_login' %}{% endif %}" class="px-4 py-2.5 rounded-xl text-emerald-100 hover:bg-emerald-700/80 flex items-center gap-2 transition">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
                     <span>Admin Portal</span>
                 </a>
-                <a href="/#about" onclick="toggleMobileMenu()" class="px-4 py-2.5 rounded-xl text-stone-200 hover:text-white hover:bg-emerald-500/20 transition">
+                <a href="/#about" onclick="toggleMobileMenu()" class="px-4 py-2.5 rounded-xl text-emerald-100 hover:bg-emerald-700/80 transition">
                     About Us
                 </a>
-                <a href="/#contact" onclick="toggleMobileMenu()" class="px-4 py-2.5 rounded-xl text-stone-200 hover:text-white hover:bg-emerald-500/20 transition">
+                <a href="/#contact" onclick="toggleMobileMenu()" class="px-4 py-2.5 rounded-xl text-emerald-100 hover:bg-emerald-700/80 transition">
                     Contact &amp; Orders
                 </a>
             </nav>
 
-            <div class="pt-4 border-t border-emerald-900/50 space-y-2.5">
-                <button type="button" onclick="triggerAndroidInstall(); toggleMobileMenu();" class="w-full py-2.5 px-4 rounded-xl bg-emerald-950 border border-emerald-500/50 text-emerald-300 font-bold text-xs flex items-center justify-center gap-2">
-                    <i data-lucide="download" class="w-4 h-4"></i>
+            <div class="pt-4 border-t border-emerald-700 space-y-2.5">
+                <button type="button" onclick="triggerAndroidInstall(); toggleMobileMenu();" class="w-full py-2.5 px-4 rounded-xl bg-emerald-900 border border-emerald-600 text-emerald-100 font-black text-xs flex items-center justify-center gap-2 shadow-xs">
+                    <i data-lucide="download" class="w-4 h-4 text-emerald-300"></i>
                     <span>Install Wellful Home App</span>
                 </button>
-                <a href="tel:+233268229696" class="w-full py-2.5 px-4 rounded-xl bg-stone-900 border border-stone-800 text-stone-200 font-bold text-xs flex items-center justify-center gap-2">
+                <a href="tel:+233268229696" class="w-full py-2.5 px-4 rounded-xl bg-emerald-950 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs">
                     <i data-lucide="phone-call" class="w-4 h-4 text-emerald-400"></i>
                     <span>Hotline: +233 (0) 26 822 9696</span>
                 </a>
