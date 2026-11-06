@@ -147,6 +147,8 @@
                 </div>
                 {% endif %}
 
+                <!-- Physical Hardware Products Section (Suppressed for Wellful Data) -->
+                {% if products or category.slug != 'wellful-data' and 'data' not in category.slug %}
                 <div class="flex items-center justify-between pb-6 mb-6 border-b border-stone-200">
                     <div>
                         <h2 class="text-lg font-bold text-stone-900">Available Products</h2>
@@ -223,6 +225,7 @@
                     </div>
                     {% endfor %}
                 </div>
+                {% endif %}
 
             </main>
 
