@@ -27,11 +27,11 @@
                 <div class="flex flex-wrap items-center gap-2">
                     <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-950 bg-emerald-200/90 border border-emerald-400 px-3.5 py-1.5 rounded-xl shadow-xs">
                         <i data-lucide="boxes" class="w-3.5 h-3.5 text-emerald-800"></i>
-                        <span><strong>Bulk Carton Supply:</strong> For wholesalers, pharmacies, hardware stores &amp; clinics</span>
+                        <span><strong>Bulk Carton Supply:</strong> Case lots for wholesalers, pharmacies &amp; hardware stores</span>
                     </span>
                     <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-950 bg-teal-100/90 border border-teal-400 px-3.5 py-1.5 rounded-xl shadow-xs">
-                        <i data-lucide="truck" class="w-3.5 h-3.5 text-teal-800"></i>
-                        <span><strong>Pallet &amp; Freight Dispatch:</strong> Full container and carton distributions across Ghana</span>
+                        <i data-lucide="warehouse" class="w-3.5 h-3.5 text-teal-800"></i>
+                        <span><strong>Warehouse Collection:</strong> Direct depot collection and stock allocation in Ghana</span>
                     </span>
                 </div>
 
@@ -61,8 +61,8 @@
                         <div class="text-xs text-emerald-950 font-semibold mt-0.5">Bulk cartons &amp; cases</div>
                     </div>
                     <div class="p-3.5 sm:p-0 rounded-2xl bg-white/70 sm:bg-transparent border sm:border-0 border-emerald-200 sm:border-l sm:border-emerald-300 sm:pl-6">
-                        <div class="text-lg sm:text-2xl font-black text-emerald-800 tracking-tight">Nationwide</div>
-                        <div class="text-xs text-emerald-950 font-semibold mt-0.5">Freight waybill &amp; dispatch</div>
+                        <div class="text-lg sm:text-2xl font-black text-emerald-800 tracking-tight">Depot Supply</div>
+                        <div class="text-xs text-emerald-950 font-semibold mt-0.5">Direct warehouse pickup</div>
                     </div>
                     <div class="p-3.5 sm:p-0 rounded-2xl bg-white/70 sm:bg-transparent border sm:border-0 border-emerald-200 sm:border-l sm:border-emerald-300 sm:pl-6">
                         <div class="text-lg sm:text-2xl font-black text-amber-700 tracking-tight">Direct Importer</div>
@@ -138,16 +138,16 @@
     </div>
 </section>
 
-<!-- Nationwide Wholesale Logistics Bar -->
+<!-- Nationwide Wholesale Depot Logistics Bar -->
 <div class="bg-emerald-900 border-b border-emerald-950 py-3.5 px-4 text-xs font-semibold text-emerald-100">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-2">
-            <i data-lucide="truck" class="w-4 h-4 text-emerald-300 shrink-0"></i>
-            <span>Commercial pallet and carton freight logistics for distributors, shops, and institutions nationwide across Ghana.</span>
+            <i data-lucide="warehouse" class="w-4 h-4 text-emerald-300 shrink-0"></i>
+            <span>Direct warehouse stock allocation for distributors, pharmacies, and hardware merchants across Ghana.</span>
         </div>
         <div class="flex items-center gap-2">
             <i data-lucide="package-check" class="w-4 h-4 text-emerald-300 shrink-0"></i>
-            <span>Direct importer pricing: Proforma invoices and bulk waybills provided on every order.</span>
+            <span>Commercial procurement: Itemized proforma invoices &amp; case documentation issued on confirmation.</span>
         </div>
     </div>
 </div>
@@ -176,7 +176,7 @@
             <!-- Left Flanking Logo: Centers the 7th Card on Row 3 -->
             <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
-                    src="{% static 'images/well_home.jpg' %}" 
+                    src="{% static 'images/well_logo.jpg' %}" 
                     alt="Wellful Home Logo" 
                     class="h-20 lg:h-28 w-auto max-w-full object-contain opacity-95 hover:opacity-100 transition-opacity"
                 >
@@ -190,21 +190,21 @@
                     <div class="bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 p-5 sm:p-7 border-b-2 border-emerald-600/80 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-lg border border-white/60 flex items-center justify-center w-full sm:flex-1 min-h-[110px] sm:min-h-[120px] overflow-hidden">
                             {% if 'care' in category.slug or 'care' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_care.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                <img src="{% static 'images/pillars/well_care.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
                             {% elif 'data' in category.slug or 'data' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_data.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                <img src="{% static 'images/pillars/well_data.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
                             {% elif 'device' in category.slug or 'device' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_devices.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                <img src="{% static 'images/pillars/well_devices.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
                             {% elif 'fit' in category.slug or 'fit' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_fit.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                <img src="{% static 'images/pillars/well_fit.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
                             {% elif 'food' in category.slug or 'food' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_food.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                <img src="{% static 'images/pillars/well_food.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
                             {% elif 'san' in category.slug or 'san' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_san.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                <img src="{% static 'images/pillars/well_san.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
                             {% elif 'sole' in category.slug or 'sole' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_sole.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                <img src="{% static 'images/pillars/well_sole.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
                             {% else %}
-                                <img src="{% static 'images/well_logo.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                <img src="{% static 'images/well_logo.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
                             {% endif %}
                         </div>
                         <span class="self-end sm:self-center text-xs font-black tracking-widest uppercase text-white bg-emerald-950/90 border border-emerald-400/60 px-3.5 py-1.5 rounded-full shrink-0 shadow-xs">
@@ -240,7 +240,7 @@
             <!-- Right Flanking Logo: Balances Row 3 -->
             <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
-                    src="{% static 'images/well_home.jpg' %}" 
+                    src="{% static 'images/well_logo.jpg' %}" 
                     alt="Wellful Home Logo" 
                     class="h-20 lg:h-28 w-auto max-w-full object-contain opacity-95 hover:opacity-100 transition-opacity"
                 >
@@ -306,8 +306,8 @@
                     <div class="flex items-start gap-4">
                         <div class="w-9 h-9 rounded-xl bg-emerald-400 text-emerald-950 font-black flex items-center justify-center shrink-0 text-sm">3</div>
                         <div>
-                            <h4 class="font-bold text-sm text-white">Immediate Dispatch &amp; Nationwide Waybill</h4>
-                            <p class="text-xs text-emerald-200/80 mt-1">Same-day warehouse truck dispatch in Accra &amp; Tema, and trusted freight waybills dispatched to Kumasi, Takoradi, Tamale, and all regions.</p>
+                            <h4 class="font-bold text-sm text-white">Warehouse Inspection &amp; Stock Collection</h4>
+                            <p class="text-xs text-emerald-200/80 mt-1">Inspect sealed cartons directly at our Accra warehouse depot upon payment, or dispatch your transport driver for immediate loading.</p>
                         </div>
                     </div>
 
