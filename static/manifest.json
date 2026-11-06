@@ -1,30 +1,30 @@
 {
   "name": "Wellful Home",
   "short_name": "Wellful Home",
-  "description": "Safe, comfortable, and healthy living hardware in Ghana.",
+  "description": "Safe, comfortable, and healthy living hardware in Ghana. Retail & wholesale supply.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0c0a09",
+  "theme_color": "#047857",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/static/images/icons/icon-192x192.png",
+      "src": "/static/images/Wellful_logo.jpg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "/static/images/icons/icon-512x512.png",
+      "src": "/static/images/Wellful_logo.jpg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "/static/images/icons/icon-512x512.png",
+      "src": "/static/images/Wellful_logo.jpg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "maskable"
     }
   ]
