@@ -11,11 +11,15 @@ admin.site.site_title = "Wellful Home Admin Portal"
 admin.site.index_title = "Wellful Home Management Dashboard"
 
 urlpatterns = [
-    # PWA Service Worker served at root scope
+    # PWA Service Worker & Web Manifest served at root scope
     path('sw.js', TemplateView.as_view(
         template_name='sw.js',
         content_type='application/javascript'
     ), name='service_worker'),
+    path('manifest.json', TemplateView.as_view(
+        template_name='manifest.json',
+        content_type='application/manifest+json'
+    ), name='web_manifest'),
     
     path('admin/', admin.site.urls),
     path('', catalog_views.home, name='home'),

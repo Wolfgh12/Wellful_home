@@ -21,14 +21,24 @@
     <meta property="og:image:height" content="675">
 
     <!-- PWA Web App Manifest & Mid-Sage Status Bar Theme -->
-    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#047857">
 
     <!-- iOS Safari Native Standalone Web App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Wellful Home">
-    <link rel="apple-touch-icon" href="{% static 'images/well_logo.jpg' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/icons/apple-touch-icon.png' %}">
+
+    <!-- Capture Chrome/Edge/Android install prompt immediately before body scripts load -->
+    <script>
+        window.__deferredInstallPrompt = null;
+        window.addEventListener('beforeinstallprompt', function (e) {
+            e.preventDefault();
+            window.__deferredInstallPrompt = e;
+            document.dispatchEvent(new Event('wellful:install-ready'));
+        });
+    </script>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -319,15 +329,13 @@
             <span>Add to Home Screen</span>
         </button>
 
-        <!-- iPhone Safari Guidance Box -->
-        <div id="iosInstallHint" class="mt-3 hidden text-[11px] text-stone-300 bg-stone-900 border border-stone-800 p-3 rounded-2xl space-y-1">
+        <!-- Dynamic Browser-Specific Guidance Box -->
+        <div id="browserInstallHint" class="mt-3 hidden text-[11px] text-stone-300 bg-stone-900 border border-stone-800 p-3 rounded-2xl space-y-1">
             <div class="flex items-center gap-1.5 font-bold text-emerald-400 text-[10px] uppercase">
-                <i data-lucide="share" class="w-3.5 h-3.5"></i>
-                <span>Install on iPhone / iPad</span>
+                <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+                <span id="installHintTitle">Install App</span>
             </div>
-            <p class="leading-relaxed">
-                Tap the <strong class="text-white">Share</strong> button <i data-lucide="share-2" class="w-3 h-3 inline text-stone-300"></i> at the bottom of Safari, then choose <strong class="text-white">"Add to Home Screen"</strong>.
-            </p>
+            <p id="installHintBody" class="leading-relaxed"></p>
         </div>
     </div>
 
@@ -343,72 +351,87 @@
             });
         }
 
-        // 2. Chrome / Edge / Android Native 1-Click Install Trigger
-        let deferredPrompt = null;
+        // 2. Universal Cross-Browser Install Controller
         const installBanner = document.getElementById('pwaInstallBanner');
         const btnAndroidInstall = document.getElementById('btnAndroidInstall');
-        const iosInstallHint = document.getElementById('iosInstallHint');
+        const browserInstallHint = document.getElementById('browserInstallHint');
+        const installHintTitle = document.getElementById('installHintTitle');
+        const installHintBody = document.getElementById('installHintBody');
         const navInstallBtn = document.getElementById('navInstallBtn');
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
+        const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+        const isInStandaloneMode = () =>
+            (('standalone' in window.navigator) && window.navigator.standalone) ||
+            window.matchMedia('(display-mode: standalone)').matches;
+
+        function showNativeInstallReady() {
             if (installBanner && btnAndroidInstall) {
                 installBanner.classList.remove('hidden');
                 btnAndroidInstall.classList.remove('hidden');
                 btnAndroidInstall.classList.add('inline-flex');
+                if (browserInstallHint) browserInstallHint.classList.add('hidden');
             }
-        });
+        }
+
+        if (window.__deferredInstallPrompt) {
+            showNativeInstallReady();
+        }
+        document.addEventListener('wellful:install-ready', showNativeInstallReady);
 
         window.addEventListener('appinstalled', () => {
-            deferredPrompt = null;
+            window.__deferredInstallPrompt = null;
             if (installBanner) installBanner.classList.add('hidden');
             if (navInstallBtn) {
-                navInstallBtn.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-300"></i><span>App Installed</span>';
+                navInstallBtn.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-300"></i><span>Installed</span>';
                 if (window.lucide) lucide.createIcons();
             }
         });
 
         function triggerAndroidInstall() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
+            // 1-Click Native Prompt (Chrome, Edge, Brave, Samsung Internet, Android)
+            if (window.__deferredInstallPrompt) {
+                const promptEvent = window.__deferredInstallPrompt;
+                promptEvent.prompt();
+                promptEvent.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted' && installBanner) {
                         installBanner.classList.add('hidden');
                     }
-                    deferredPrompt = null;
+                    window.__deferredInstallPrompt = null;
                 });
                 return;
             }
 
-            if (isIos()) {
-                if (installBanner && iosInstallHint) {
-                    installBanner.classList.remove('hidden');
-                    iosInstallHint.classList.remove('hidden');
-                }
-                return;
-            }
-
+            // Localhost redirect if tested on 127.0.0.1
             if (window.location.hostname === '127.0.0.1') {
                 window.location.href = window.location.href.replace('127.0.0.1', 'localhost');
                 return;
             }
 
-            alert("Wellful Home is either already installed on this device, or you can install it directly from Chrome's address bar icon (⊕) or Menu (⋮) → 'Install Wellful Home'.");
+            // Clean in-app card fallback for Safari / Firefox / already-installed state
+            if (installBanner && browserInstallHint && installHintTitle && installHintBody) {
+                installBanner.classList.remove('hidden');
+                browserInstallHint.classList.remove('hidden');
+                if (btnAndroidInstall) btnAndroidInstall.classList.add('hidden');
+
+                if (isIos()) {
+                    installHintTitle.textContent = 'Install on iPhone / iPad';
+                    installHintBody.innerHTML = 'Tap the <strong class="text-white">Share</strong> button at the bottom of Safari, then select <strong class="text-white">"Add to Home Screen"</strong>.';
+                } else if (isInStandaloneMode()) {
+                    installHintTitle.textContent = 'Already Installed';
+                    installHintBody.textContent = 'Wellful Home is already running as an installed app on your device.';
+                } else {
+                    installHintTitle.textContent = 'Install from Browser Menu';
+                    installHintBody.innerHTML = 'Click the <strong class="text-white">Install icon</strong> in your browser address bar, or open <strong class="text-white">Menu (⋮ / ☰) → "Install Wellful Home"</strong>.';
+                }
+            }
         }
 
-        // 3. iOS Detection & Prompt Handling
-        const isIos = () => {
-            const userAgent = window.navigator.userAgent.toLowerCase();
-            return /iphone|ipad|ipod/.test(userAgent);
-        };
-        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
-
-        if (isIos() && !isInStandaloneMode()) {
-            const dismissed = localStorage.getItem('ios_pwa_dismissed');
-            if (!dismissed && installBanner && iosInstallHint) {
+        if (isIos() && !isInStandaloneMode() && !localStorage.getItem('ios_pwa_dismissed')) {
+            if (installBanner && browserInstallHint && installHintTitle && installHintBody) {
                 installBanner.classList.remove('hidden');
-                iosInstallHint.classList.remove('hidden');
+                browserInstallHint.classList.remove('hidden');
+                installHintTitle.textContent = 'Install on iPhone / iPad';
+                installHintBody.innerHTML = 'Tap the <strong class="text-white">Share</strong> button at the bottom of Safari, then select <strong class="text-white">"Add to Home Screen"</strong>.';
             }
         }
 
