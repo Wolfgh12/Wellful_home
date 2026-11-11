@@ -1,11 +1,8 @@
-const CACHE_NAME = 'wellful-home-v5';
+const CACHE_NAME = 'wellful-home-v6';
 const STATIC_ASSETS = [
     '/',
     '/manifest.json',
-    '/static/images/well_logo.jpg',
-    '/static/images/icons/icon-192x192.png',
-    '/static/images/icons/icon-512x512.png',
-    '/static/images/icons/apple-touch-icon.png',
+    '/static/images/Wellful_logo.jpg',
     '/static/images/pillars/well_care.jpg',
     '/static/images/pillars/well_data.jpg',
     '/static/images/pillars/well_devices.jpg',
@@ -17,7 +14,9 @@ const STATIC_ASSETS = [
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+        caches.open(CACHE_NAME).then((cache) =>
+            Promise.allSettled(STATIC_ASSETS.map((url) => cache.add(url)))
+        )
     );
     self.skipWaiting();
 });
