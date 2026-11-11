@@ -71,15 +71,15 @@
 </head>
 <body class="bg-gradient-to-b from-emerald-100/30 via-stone-50 to-teal-100/20 text-stone-900 font-sans antialiased selection:bg-emerald-300 selection:text-emerald-950">
 
-    <!-- Top Assistance & Nationwide Logistics Bar (Balanced Mid-Tone Forest/Sage) -->
+    <!-- Top Assistance & Wholesale Supply Bar -->
     <div class="bg-emerald-800 text-emerald-50 text-[11px] sm:text-xs py-2 px-3 sm:px-4 border-b border-emerald-900/40 shadow-xs">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1.5 sm:gap-2 text-center sm:text-left">
             <div class="flex items-center justify-center space-x-2">
                 <span class="inline-block w-2 h-2 rounded-full bg-emerald-300 animate-pulse shrink-0"></span>
-                <span class="font-semibold text-emerald-100">Doorstep Delivery Across Accra, Tema &amp; Nationwide</span>
+                <span class="font-semibold text-emerald-100">Direct Importer &amp; Wholesale Stock Provider in Ghana</span>
             </div>
             <div class="flex items-center justify-center gap-3 sm:gap-6">
-                <span class="hidden md:inline text-emerald-200/90 font-medium">Tested Hardware &amp; Direct Assistance</span>
+                <span class="hidden md:inline text-emerald-200/90 font-medium">Factory-Tested Stock &amp; Direct Assistance</span>
                 <a href="tel:+233268229696" class="text-white hover:text-emerald-200 font-black flex items-center gap-1.5 transition whitespace-nowrap">
                     <i data-lucide="phone-call" class="w-3 h-3 text-emerald-300 shrink-0"></i>
                     <span>Help Hotline: +233 (0) 26 822 9696</span>
@@ -273,7 +273,7 @@
             <div>
                 <h4 class="text-xs uppercase font-bold text-stone-200 tracking-wider mb-4">Support &amp; Orders</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="/#about" class="hover:text-emerald-400 transition">How Shopping Works</a></li>
+                    <li><a href="/#about" class="hover:text-emerald-400 transition">How Wholesale Supply Works</a></li>
                     <li><a href="https://wa.me/233268229696" class="hover:text-emerald-400 transition">Chat on WhatsApp</a></li>
                     <li><a href="tel:+233268229696" class="hover:text-emerald-400 transition">Help Hotline: +233 (0) 26 822 9696</a></li>
                 </ul>
@@ -301,11 +301,11 @@
         <div class="flex items-start justify-between gap-3">
             <div class="flex items-center gap-3">
                 <div class="w-12 h-12 rounded-2xl bg-white p-1.5 shadow-md border border-emerald-400/30 flex items-center justify-center shrink-0">
-                    <img src="{% static 'images/Wellful_home.jpg' %}" alt="Wellful Home App Icon" class="w-full h-full object-contain">
+                    <img src="{% static 'images/well_logo.jpg' %}" alt="Wellful Home App Icon" class="w-full h-full object-contain">
                 </div>
                 <div>
                     <h4 class="text-xs font-black text-white">Install Wellful Home</h4>
-                    <p class="text-[10px] text-stone-300">Fast 1-tap retail &amp; wholesale ordering.</p>
+                    <p class="text-[10px] text-stone-300">Fast 1-tap wholesale catalog &amp; bulk inquiries.</p>
                 </div>
             </div>
             <button type="button" onclick="dismissInstallBanner()" class="text-stone-400 hover:text-white p-1">
@@ -343,11 +343,12 @@
             });
         }
 
-        // 2. Android Native Install Trigger
-        let deferredPrompt;
+        // 2. Chrome / Edge / Android Native 1-Click Install Trigger
+        let deferredPrompt = null;
         const installBanner = document.getElementById('pwaInstallBanner');
         const btnAndroidInstall = document.getElementById('btnAndroidInstall');
         const iosInstallHint = document.getElementById('iosInstallHint');
+        const navInstallBtn = document.getElementById('navInstallBtn');
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -359,16 +360,41 @@
             }
         });
 
+        window.addEventListener('appinstalled', () => {
+            deferredPrompt = null;
+            if (installBanner) installBanner.classList.add('hidden');
+            if (navInstallBtn) {
+                navInstallBtn.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-300"></i><span>App Installed</span>';
+                if (window.lucide) lucide.createIcons();
+            }
+        });
+
         function triggerAndroidInstall() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
+                    if (choiceResult.outcome === 'accepted' && installBanner) {
                         installBanner.classList.add('hidden');
                     }
                     deferredPrompt = null;
                 });
+                return;
             }
+
+            if (isIos()) {
+                if (installBanner && iosInstallHint) {
+                    installBanner.classList.remove('hidden');
+                    iosInstallHint.classList.remove('hidden');
+                }
+                return;
+            }
+
+            if (window.location.hostname === '127.0.0.1') {
+                window.location.href = window.location.href.replace('127.0.0.1', 'localhost');
+                return;
+            }
+
+            alert("Wellful Home is either already installed on this device, or you can install it directly from Chrome's address bar icon (⊕) or Menu (⋮) → 'Install Wellful Home'.");
         }
 
         // 3. iOS Detection & Prompt Handling
