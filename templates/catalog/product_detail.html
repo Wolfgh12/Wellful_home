@@ -70,6 +70,25 @@
                     </div>
                 </div>
 
+                <!-- Interactive Gallery Thumbnails Strip (Up to 10 Photos) -->
+                {% if product.gallery_images.all %}
+                <div class="space-y-2">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-stone-500 block">Product Gallery (Click to inspect)</span>
+                    <div class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-thin">
+                        {% if product.image %}
+                        <button type="button" onclick="switchMainImage('{{ product.image.url }}', this)" class="gallery-thumb-btn w-16 h-16 rounded-xl border-2 border-emerald-500 p-1 bg-stone-100 overflow-hidden shrink-0 transition focus:outline-none">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-contain rounded-lg">
+                        </button>
+                        {% endif %}
+                        {% for g_img in product.gallery_images.all %}
+                        <button type="button" onclick="switchMainImage('{{ g_img.image.url }}', this)" class="gallery-thumb-btn w-16 h-16 rounded-xl border border-stone-200 hover:border-emerald-500 p-1 bg-stone-100 overflow-hidden shrink-0 transition focus:outline-none">
+                            <img src="{{ g_img.image.url }}" alt="Gallery view {{ forloop.counter }}" class="w-full h-full object-contain rounded-lg">
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
                 <!-- Trust Signal Callouts -->
                 <div class="grid grid-cols-3 gap-4">
                     <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200/70 text-center space-y-1">
@@ -134,56 +153,145 @@
                 </div>
                 {% endif %}
 
-                <!-- Action Hub (Direct Order Trigger) -->
-                <div class="p-6 rounded-3xl bg-brand-950 text-white space-y-4 shadow-xl border border-brand-900">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <!-- Frictionless WhatsApp Quick Checkout Hub -->
+                <div class="p-6 sm:p-7 rounded-3xl bg-brand-950 text-white space-y-5 shadow-2xl border border-emerald-500/30">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-brand-900">
                         <div>
-                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block">Instant Order Placement</span>
-                            <span class="text-sm font-semibold text-stone-200">Direct confirmation & doorstep delivery across Ghana</span>
+                            <span class="text-xs font-black text-emerald-400 uppercase tracking-widest block">Quick Doorstep Order</span>
+                            <span class="text-xs text-stone-300">No account required &bull; Confirm directly on WhatsApp</span>
                         </div>
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-900/80 border border-emerald-500/40 text-[11px] font-black text-emerald-300 shrink-0 self-start sm:self-auto">
-                            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
-                            <span>No Account Needed</span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-900/80 border border-emerald-500/40 text-[10px] font-black text-emerald-300 uppercase tracking-wider shrink-0 self-start sm:self-auto">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+                            <span>Accra &amp; Nationwide</span>
                         </span>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row items-stretch gap-3 pt-2">
-                        <!-- Direct WhatsApp Order Trigger -->
-                        <a 
-                            href="https://wa.me/233268229696?text=Hello%20Wellful%20Home%2C%20I%20would%20like%20to%20order%20*{{ product.name|urlencode }}*%20(SKU%3A%20{{ product.sku }})%20priced%20at%20*GHS%20{{ product.price_ghs }}*.%20Please%20confirm%20stock%20and%20doorstep%20delivery%20to%20my%20Ghana%20digital%20address." 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            class="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-brand-950 font-black text-sm shadow-md transition transform hover:-translate-y-0.5"
-                        >
-                            <i data-lucide="message-square" class="w-4 h-4"></i>
-                            <span>Order via WhatsApp</span>
-                        </a>
+                    <form method="post" action="{% url 'catalog:quick_order_checkout' product_id=product.id %}" class="space-y-4">
+                        {% csrf_token %}
+                        {{ order_form.google_maps_url }}
 
-                        <!-- Direct Phone Call -->
-                        <a 
-                            href="tel:+233268229696" 
-                            class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-100 font-bold text-sm transition"
-                        >
-                            <i data-lucide="phone" class="w-4 h-4"></i>
-                            <span>Call Store</span>
-                        </a>
-                    </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            <!-- Customer Name -->
+                            <div class="space-y-1">
+                                <label class="text-[11px] font-bold text-stone-300 block">Full Name <span class="text-emerald-400">*</span></label>
+                                {{ order_form.customer_name }}
+                            </div>
 
-                    <div class="pt-1 flex flex-col items-center gap-2 text-center">
-                        <p class="text-[11px] text-stone-400 leading-relaxed">
-                            Prompt delivery to your gate or landmark using GhanaPost GPS address verification.
-                        </p>
+                            <!-- Phone Number -->
+                            <div class="space-y-1">
+                                <label class="text-[11px] font-bold text-stone-300 block">Phone Number <span class="text-emerald-400">*</span></label>
+                                {{ order_form.customer_phone }}
+                            </div>
 
-                        {% if user.is_staff or user.is_superuser %}
-                        <div class="pt-2 border-t border-brand-900 w-full flex items-center justify-center">
-                            <a href="{% url 'catalog:admin_product_edit' product_id=product.id %}" class="inline-flex items-center gap-1.5 text-xs text-amber-300 hover:text-amber-200 font-bold transition">
-                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                <span>Staff Shortcut: Edit this product in portal</span>
+                            <!-- Quantity Selector -->
+                            <div class="space-y-1">
+                                <label class="text-[11px] font-bold text-stone-300 block">Quantity Units</label>
+                                {{ order_form.quantity }}
+                            </div>
+
+                            <!-- Optional Email -->
+                            <div class="space-y-1">
+                                <label class="text-[11px] font-bold text-stone-300 block">Email Address (Optional)</label>
+                                {{ order_form.customer_email }}
+                            </div>
+                        </div>
+
+                        <!-- GhanaPost GPS + Live Location Pin Button -->
+                        <div class="space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <label class="text-[11px] font-bold text-stone-300 block">Delivery Address / GPS <span class="text-emerald-400">*</span></label>
+                                <button 
+                                    type="button" 
+                                    id="btnPinLiveLocation" 
+                                    onclick="captureLiveCoordinates()" 
+                                    class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[10px] font-bold transition"
+                                >
+                                    <i data-lucide="map-pin" class="w-3 h-3 text-emerald-400"></i>
+                                    <span id="pinBtnText">📍 Pin My Live Gate / Location</span>
+                                </button>
+                            </div>
+                            {{ order_form.digital_address }}
+                            <div id="livePinSuccessBanner" class="hidden text-[10px] text-emerald-400 font-semibold flex items-center gap-1 pt-0.5">
+                                <i data-lucide="check-circle" class="w-3 h-3"></i>
+                                <span>Satellite GPS coordinates attached successfully!</span>
+                            </div>
+                        </div>
+
+                        <!-- Optional Landmark / Gate Notes -->
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-bold text-stone-300 block">Nearby Landmark or Gate Description</label>
+                            {{ order_form.delivery_notes }}
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                            <button 
+                                type="submit" 
+                                class="flex-1 py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-black text-xs shadow-lg shadow-emerald-950/60 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                            >
+                                <i data-lucide="message-square" class="w-4 h-4"></i>
+                                <span>Submit &amp; Open in WhatsApp</span>
+                            </button>
+
+                            <a 
+                                href="tel:+233268229696" 
+                                class="py-3.5 px-5 rounded-xl bg-stone-900 hover:bg-stone-800 border border-stone-800 text-stone-200 font-bold text-xs transition flex items-center justify-center gap-2"
+                            >
+                                <i data-lucide="phone" class="w-4 h-4 text-emerald-400"></i>
+                                <span>Call Direct</span>
                             </a>
                         </div>
-                        {% endif %}
+                    </form>
+
+                    {% if user.is_staff or user.is_superuser %}
+                    <div class="pt-3 border-t border-brand-900 flex items-center justify-center">
+                        <a href="{% url 'catalog:admin_product_edit' product_id=product.id %}" class="inline-flex items-center gap-1.5 text-xs text-amber-300 hover:text-amber-200 font-bold transition">
+                            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                            <span>Staff Portal Shortcut: Edit this product</span>
+                        </a>
                     </div>
+                    {% endif %}
                 </div>
+
+                <script>
+                    function captureLiveCoordinates() {
+                        const pinBtnText = document.getElementById('pinBtnText');
+                        const hiddenMapsInput = document.getElementById('id_google_maps_url');
+                        const banner = document.getElementById('livePinSuccessBanner');
+
+                        if (!navigator.geolocation) {
+                            alert("Geolocation is not supported by your browser. Please type your GhanaPost GPS code or landmark manually.");
+                            return;
+                        }
+
+                        pinBtnText.innerText = "Locating gate...";
+
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                const lat = position.coords.latitude;
+                                const lng = position.coords.longitude;
+                                const mapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
+
+                                if (hiddenMapsInput) {
+                                    hiddenMapsInput.value = mapsUrl;
+                                }
+
+                                pinBtnText.innerText = "✓ Gate Pinned";
+                                if (banner) {
+                                    banner.classList.remove('hidden');
+                                }
+                                if (window.lucide) {
+                                    lucide.createIcons();
+                                }
+                            },
+                            (error) => {
+                                pinBtnText.innerText = "📍 Pin My Live Gate / Location";
+                                alert("Could not fetch location automatically. Please enter your GhanaPost address or area name.");
+                            },
+                            { enableHighAccuracy: true, timeout: 10000 }
+                        );
+                    }
+                </script>
 
             </div>
 
@@ -271,6 +379,28 @@
 </div>
 
 <script>
+    function switchMainImage(imgUrl, btnElement) {
+        const productMainImg = document.getElementById('productMainImg');
+        const enlargedImg = document.getElementById('enlargedImg');
+
+        if (productMainImg) {
+            productMainImg.src = imgUrl;
+        }
+        if (enlargedImg) {
+            enlargedImg.src = imgUrl;
+        }
+
+        document.querySelectorAll('.gallery-thumb-btn').forEach(b => {
+            b.classList.remove('border-emerald-500', 'border-2');
+            b.classList.add('border-stone-200');
+        });
+
+        if (btnElement) {
+            btnElement.classList.add('border-emerald-500', 'border-2');
+            btnElement.classList.remove('border-stone-200');
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         const trigger = document.getElementById('imageTrigger');
         const modal = document.getElementById('imageLightboxModal');
