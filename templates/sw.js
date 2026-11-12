@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wellful-home-v7';
+const CACHE_NAME = 'wellful-home-v8';
 const STATIC_ASSETS = [
     '/',
     '/manifest.json',
@@ -6,7 +6,7 @@ const STATIC_ASSETS = [
     '/static/images/Wellful_logo_192.png',
     '/static/images/Wellful_logo_512.png',
     '/static/images/pillars/well_care.jpg',
-    '/static/images/pillars/well_data.jpg',
+    '/static/images/pillars/trace.jpg',
     '/static/images/pillars/well_devices.jpg',
     '/static/images/pillars/well_fit.jpg',
     '/static/images/pillars/well_food.jpg',

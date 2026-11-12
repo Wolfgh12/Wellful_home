@@ -7,7 +7,7 @@ from django.utils.text import slugify
 class Category(models.Model):
     PILLAR_CHOICES = [
         ('MEDICAL', 'Wellful Care'),
-        ('DEPOSITORY', 'Wellful Data'),
+        ('DEPOSITORY', 'Wellful Trace'),
         ('VOLTAGE', 'Wellful Devices'),
         ('FITNESS', 'Wellful Fitness'),
         ('SUPPLEMENTS', 'Wellful Food'),

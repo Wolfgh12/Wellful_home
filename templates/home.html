@@ -205,8 +205,8 @@
                         <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-lg border border-white/60 flex items-center justify-center w-full sm:flex-1 min-h-[110px] sm:min-h-[120px] overflow-hidden">
                             {% if 'care' in category.slug or 'care' in category.name|lower %}
                                 <img src="{% static 'images/pillars/well_care.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
-                            {% elif 'data' in category.slug or 'data' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_data.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
+                            {% elif 'trace' in category.slug or 'trace' in category.name|lower or 'data' in category.slug or 'data' in category.name|lower %}
+                                <img src="{% static 'images/pillars/trace.jpg' %}" alt="Wellful Trace" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
                             {% elif 'device' in category.slug or 'device' in category.name|lower %}
                                 <img src="{% static 'images/pillars/well_devices.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
                             {% elif 'fit' in category.slug or 'fit' in category.name|lower %}
@@ -229,7 +229,7 @@
                     <!-- Category Content -->
                     <div class="p-6 sm:p-7 space-y-2.5">
                         <h3 class="text-xl sm:text-2xl font-black {% if category.is_locked %}text-stone-700{% else %}text-stone-950 group-hover:text-emerald-800{% endif %} leading-snug transition">
-                            {{ category.name }}
+                            {% if category.pillar_type == 'DEPOSITORY' and category.name == 'Wellful Data' %}Wellful Trace{% else %}{{ category.name }}{% endif %}
                         </h3>
 
                         <p class="text-xs sm:text-sm {% if category.is_locked %}text-stone-500{% else %}text-stone-700{% endif %} leading-relaxed font-medium">
