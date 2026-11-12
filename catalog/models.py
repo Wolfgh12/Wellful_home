@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
 
+
 class Category(models.Model):
     PILLAR_CHOICES = [
         ('MEDICAL', 'Wellful Care'),
@@ -14,6 +15,11 @@ class Category(models.Model):
         ('FOOTWEAR', 'Wellful Sole'),
     ]
 
+    class AvailabilityStatus(models.TextChoices):
+        IN_STOCK = 'IN_STOCK', 'In Stock'
+        STOCKING_SOON = 'STOCKING_SOON', 'Stocking Soon'
+        COMING_SOON = 'COMING_SOON', 'Coming Soon'
+
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=120, unique=True, blank=True)
     pillar_type = models.CharField(
@@ -21,6 +27,12 @@ class Category(models.Model):
         choices=PILLAR_CHOICES,
         unique=True,
         help_text="The core wellness pillar this category aligns with"
+    )
+    availability_status = models.CharField(
+        max_length=20,
+        choices=AvailabilityStatus.choices,
+        default=AvailabilityStatus.IN_STOCK,
+        help_text="Controls whether this pillar shows In Stock, Stocking Soon, or Coming Soon (Locked)"
     )
     description = models.TextField(blank=True)
     icon = models.CharField(max_length=50, blank=True, help_text="Image filename or Lucide icon class")
@@ -34,8 +46,20 @@ class Category(models.Model):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+    @property
+    def is_locked(self):
+        return self.availability_status == self.AvailabilityStatus.COMING_SOON
+
+    @property
+    def is_in_stock(self):
+        return self.availability_status == self.AvailabilityStatus.IN_STOCK
+
+    @property
+    def is_stocking_soon(self):
+        return self.availability_status == self.AvailabilityStatus.STOCKING_SOON
+
     def __str__(self):
-        return f"{self.name} ({self.get_pillar_type_display()})"
+        return f"{self.name} ({self.get_pillar_type_display()}) - {self.get_availability_status_display()}"
 
 
 class Product(models.Model):

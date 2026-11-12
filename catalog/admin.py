@@ -5,14 +5,28 @@ from .models import Category, Product, Order, OrderItem
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'pillar_type', 'slug', 'product_count')
-    list_filter = ('pillar_type',)
+    list_display = ('name', 'pillar_type', 'availability_status', 'slug', 'product_count')
+    list_editable = ('availability_status',)
+    list_filter = ('availability_status', 'pillar_type')
     search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name',)}
+    actions = ('mark_in_stock', 'mark_stocking_soon', 'mark_coming_soon')
 
     def product_count(self, obj):
         return obj.products.count()
     product_count.short_description = "Total Products"
+
+    @admin.action(description="Set selected pillars to In Stock")
+    def mark_in_stock(self, request, queryset):
+        queryset.update(availability_status=Category.AvailabilityStatus.IN_STOCK)
+
+    @admin.action(description="Set selected pillars to Stocking Soon")
+    def mark_stocking_soon(self, request, queryset):
+        queryset.update(availability_status=Category.AvailabilityStatus.STOCKING_SOON)
+
+    @admin.action(description="Lock selected pillars as Coming Soon")
+    def mark_coming_soon(self, request, queryset):
+        queryset.update(availability_status=Category.AvailabilityStatus.COMING_SOON)
 
 
 @admin.register(Product)
@@ -36,7 +50,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ("Pillar & Categorization", {
-            'fields': ('category', 'sku', 'name', 'slug')
+            'fields': ('category', 'sku', 'name', 'slug', 'availability_status') if False else ('category', 'sku', 'name', 'slug')
         }),
         ("Product Media", {
             'fields': ('image', 'image_preview'),

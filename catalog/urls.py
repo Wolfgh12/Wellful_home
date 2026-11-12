@@ -8,6 +8,7 @@ urlpatterns = [
     path('category/<slug:slug>/', views.category_detail, name='category_detail'),
     path('product/<slug:slug>/', views.product_detail, name='product_detail'),
     path('product/<int:product_id>/quick-order/', views.quick_order_checkout, name='quick_order_checkout'),
+    path('portal/pillar/<int:category_id>/status/', views.admin_pillar_status_update, name='admin_pillar_status_update'),
     path('portal/product/add/', views.admin_product_create, name='admin_product_create'),
     path('portal/product/<int:product_id>/edit/', views.admin_product_edit, name='admin_product_edit'),
     path('portal/product/<int:product_id>/delete/', views.admin_product_delete, name='admin_product_delete'),

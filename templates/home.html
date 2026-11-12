@@ -14,7 +14,7 @@
             <!-- Left Headline & Introduction (Strict Wholesale & Distributor Focus) -->
             <div class="lg:col-span-7 space-y-5 text-left">
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-stone-950 tracking-tight leading-tight">
-                    Direct Importer &amp; <span class="text-emerald-800 underline decoration-emerald-400 underline-offset-8">Wholesale Distributor</span> in Ghana.
+                    <span class="text-emerald-800 underline decoration-emerald-400 underline-offset-8">Wholesale Distributor</span> of Specialized Products in Ghana.
                 </h1>
 
                 <!-- Wellness Fulfillment Limited Interactive Illuminated Endorsement Badge -->
@@ -22,14 +22,14 @@
                     type="button" 
                     onclick="openCertificateModal()" 
                     class="group inline-flex items-center gap-2.5 text-xs sm:text-sm font-bold text-emerald-950 bg-white hover:bg-emerald-50 border-2 border-emerald-400/80 hover:border-emerald-600 px-4 py-2 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 text-left cursor-pointer focus:outline-none"
-                    title="Click to view incorporation &amp; import certification"
+                    title="Click to view corporate registration &amp; wholesale certification"
                 >
                     <span class="relative flex h-3 w-3 shrink-0">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-600"></span>
                     </span>
                     <i data-lucide="shield-check" class="w-4 h-4 text-emerald-700 shrink-0"></i>
-                    <span>Direct Importer &amp; Wholesale Supplier under <strong class="text-emerald-900 font-black underline decoration-emerald-500 decoration-2 underline-offset-4 group-hover:text-emerald-700">Wellness Fulfillment Limited</strong></span>
+                    <span>Authorized Wholesale Distributor under <strong class="text-emerald-900 font-black underline decoration-emerald-500 decoration-2 underline-offset-4 group-hover:text-emerald-700">Wellness Fulfillment Limited</strong></span>
                     <span class="ml-1 inline-flex items-center gap-1 text-[10px] uppercase font-black tracking-wider text-emerald-800 bg-emerald-100 group-hover:bg-emerald-200 px-2 py-0.5 rounded-md border border-emerald-300 transition">
                         <i data-lucide="file-check-2" class="w-3 h-3"></i>
                         <span>View Certificate</span>
@@ -49,7 +49,7 @@
                 </div>
 
                 <p class="text-base sm:text-lg text-stone-800 font-medium leading-relaxed max-w-2xl">
-                    Importing and supplying commercial wholesale quantities of certified health and living essentials: specialized non-slip footwear, electrical and power protection equipment, sanitary and safety hardware, and certified medical devices.
+                    Distributing commercial wholesale quantities of specialized health and living essentials: comfortable footwear, electrical and power protection equipment, sanitary and safety hardware, and certified medical devices.
                 </p>
 
                 <!-- Wholesale Actions -->
@@ -78,8 +78,8 @@
                         <div class="text-xs text-emerald-950 font-semibold mt-0.5">Direct warehouse pickup</div>
                     </div>
                     <div class="p-3.5 sm:p-0 rounded-2xl bg-white/70 sm:bg-transparent border sm:border-0 border-emerald-200 sm:border-l sm:border-emerald-300 sm:pl-6">
-                        <div class="text-lg sm:text-2xl font-black text-amber-700 tracking-tight">Direct Importer</div>
-                        <div class="text-xs text-emerald-950 font-semibold mt-0.5">Factory-tested stock</div>
+                        <div class="text-lg sm:text-2xl font-black text-amber-700 tracking-tight">Specialized Stock</div>
+                        <div class="text-xs text-emerald-950 font-semibold mt-0.5">Factory-tested quality</div>
                     </div>
                 </div>
             </div>
@@ -128,11 +128,11 @@
 
                         <div class="flex items-start gap-3.5 p-3 rounded-2xl bg-emerald-100/60 border border-emerald-200 hover:border-emerald-400 transition">
                             <div class="p-2 rounded-xl bg-emerald-300/80 text-emerald-900 shrink-0">
-                                <i data-lucide="shield" class="w-4 h-4"></i>
+                                <i data-lucide="footprints" class="w-4 h-4"></i>
                             </div>
                             <div>
-                                <h4 class="text-sm font-bold text-stone-900">Non-Slip Safety Footwear</h4>
-                                <p class="text-xs text-stone-600 mt-0.5">Commercial case cartons of slip-resistant footwear and occupational safety footwear.</p>
+                                <h4 class="text-sm font-bold text-stone-900">Comfortable Footwear</h4>
+                                <p class="text-xs text-stone-600 mt-0.5">Commercial case cartons of comfortable everyday footwear and ergonomic occupational footwear.</p>
                             </div>
                         </div>
                     </div>
@@ -181,6 +181,7 @@
                 Essential wholesale hardware engineered for <strong class="text-stone-900 font-bold">safe and comfortable living</strong> across homes, institutions, and commercial facilities in Ghana.
             </p>
         </div>
+
         <!-- 3-Column Grid with Centered 7th Item Flanked by Wellful Home Logos -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             {% for category in categories %}
@@ -189,62 +190,82 @@
             <!-- Left Flanking Logo: Centers the 7th Card on Row 3 -->
             <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
-                    src="{% static 'images/well_logo.jpg' %}" 
+                    src="{% static 'images/Wellful_logo.jpg' %}" 
                     alt="Wellful Home Logo" 
                     class="h-20 lg:h-28 w-auto max-w-full object-contain opacity-95 hover:opacity-100 transition-opacity"
                 >
             </div>
             {% endif %}
 
-            <!-- Category Card: Restyled for Mobile & Desktop -->
-            <div class="group rounded-3xl overflow-hidden border-2 border-emerald-300/80 bg-white shadow-md hover:shadow-2xl hover:border-emerald-600 transition-all duration-300 flex flex-col justify-between h-full">
+            <!-- Category Card: Live Status Controlled from Admin & Dashboards -->
+            <div class="group rounded-3xl overflow-hidden border-2 {% if category.is_locked %}border-stone-300 bg-stone-50/90 opacity-90{% else %}border-emerald-300/80 bg-white hover:shadow-2xl hover:border-emerald-600{% endif %} shadow-md transition-all duration-300 flex flex-col justify-between h-full">
                 <div>
                     <!-- Card Header with Large Dedicated Logo Window -->
-                    <div class="bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 p-5 sm:p-7 border-b-2 border-emerald-600/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="{% if category.is_locked %}bg-gradient-to-r from-stone-700 via-stone-600 to-stone-700 border-b-2 border-stone-500/80{% else %}bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 border-b-2 border-emerald-600/80{% endif %} p-5 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-lg border border-white/60 flex items-center justify-center w-full sm:flex-1 min-h-[110px] sm:min-h-[120px] overflow-hidden">
                             {% if 'care' in category.slug or 'care' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_care.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
+                                <img src="{% static 'images/pillars/well_care.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
                             {% elif 'data' in category.slug or 'data' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_data.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
+                                <img src="{% static 'images/pillars/well_data.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
                             {% elif 'device' in category.slug or 'device' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_devices.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
+                                <img src="{% static 'images/pillars/well_devices.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
                             {% elif 'fit' in category.slug or 'fit' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_fit.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
+                                <img src="{% static 'images/pillars/well_fit.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
                             {% elif 'food' in category.slug or 'food' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_food.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
+                                <img src="{% static 'images/pillars/well_food.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
                             {% elif 'san' in category.slug or 'san' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_san.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
+                                <img src="{% static 'images/pillars/well_san.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
                             {% elif 'sole' in category.slug or 'sole' in category.name|lower %}
-                                <img src="{% static 'images/pillars/well_sole.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
+                                <img src="{% static 'images/pillars/well_sole.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
                             {% else %}
-                                <img src="{% static 'images/well_logo.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain">
+                                <img src="{% static 'images/Wellful_logo.jpg' %}" alt="{{ category.name }}" class="h-20 sm:h-24 md:h-28 w-auto max-w-full object-contain {% if category.is_locked %}grayscale opacity-75{% endif %}">
                             {% endif %}
                         </div>
-                        <span class="self-end sm:self-center text-xs font-black tracking-widest uppercase text-white bg-emerald-950/90 border border-emerald-400/60 px-3.5 py-1.5 rounded-full shrink-0 shadow-xs">
+                        <span class="self-end sm:self-center text-xs font-black tracking-widest uppercase text-white {% if category.is_locked %}bg-stone-900/90 border border-stone-400/60{% else %}bg-emerald-950/90 border border-emerald-400/60{% endif %} px-3.5 py-1.5 rounded-full shrink-0 shadow-xs">
                             Pillar 0{{ forloop.counter }}
                         </span>
                     </div>
 
                     <!-- Category Content -->
                     <div class="p-6 sm:p-7 space-y-2.5">
-                        <h3 class="text-xl sm:text-2xl font-black text-stone-950 leading-snug group-hover:text-emerald-800 transition">
+                        <h3 class="text-xl sm:text-2xl font-black {% if category.is_locked %}text-stone-700{% else %}text-stone-950 group-hover:text-emerald-800{% endif %} leading-snug transition">
                             {{ category.name }}
                         </h3>
 
-                        <p class="text-xs sm:text-sm text-stone-700 leading-relaxed font-medium">
+                        <p class="text-xs sm:text-sm {% if category.is_locked %}text-stone-500{% else %}text-stone-700{% endif %} leading-relaxed font-medium">
                             {{ category.description }}
                         </p>
                     </div>
                 </div>
 
-                <!-- Footer Action -->
+                <!-- Footer Action & Live Status Pill -->
                 <div class="p-7 pt-0">
-                    <div class="pt-4 border-t border-emerald-100 flex items-center justify-between">
-                        <a href="{% url 'catalog:category_detail' category.slug %}" class="inline-flex items-center gap-1.5 text-xs font-black text-emerald-800 group-hover:text-emerald-950 transition">
-                            <span>Browse Department</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition"></i>
-                        </a>
-                        <span class="text-[11px] text-emerald-950 font-extrabold bg-emerald-100 px-3 py-0.5 rounded-full border border-emerald-300">In Stock</span>
+                    <div class="pt-4 border-t {% if category.is_locked %}border-stone-200{% else %}border-emerald-100{% endif %} flex items-center justify-between gap-2">
+                        {% if category.is_locked %}
+                            <span class="inline-flex items-center gap-1.5 text-xs font-black text-stone-500 select-none">
+                                <i data-lucide="lock" class="w-3.5 h-3.5 text-stone-500"></i>
+                                <span>Department Locked</span>
+                            </span>
+                            <span class="text-[11px] text-stone-700 font-extrabold bg-stone-200/90 px-3 py-0.5 rounded-full border border-stone-300">
+                                Coming Soon
+                            </span>
+                        {% elif category.is_stocking_soon %}
+                            <a href="{% url 'catalog:category_detail' category.slug %}" class="inline-flex items-center gap-1.5 text-xs font-black text-emerald-800 group-hover:text-emerald-950 transition">
+                                <span>Browse Department</span>
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                            <span class="text-[11px] text-amber-950 font-extrabold bg-amber-100 px-3 py-0.5 rounded-full border border-amber-300">
+                                Stocking Soon
+                            </span>
+                        {% else %}
+                            <a href="{% url 'catalog:category_detail' category.slug %}" class="inline-flex items-center gap-1.5 text-xs font-black text-emerald-800 group-hover:text-emerald-950 transition">
+                                <span>Browse Department</span>
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition"></i>
+                            </a>
+                            <span class="text-[11px] text-emerald-950 font-extrabold bg-emerald-100 px-3 py-0.5 rounded-full border border-emerald-300">
+                                In Stock
+                            </span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -253,7 +274,7 @@
             <!-- Right Flanking Logo: Balances Row 3 -->
             <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
-                    src="{% static 'images/well_logo.jpg' %}" 
+                    src="{% static 'images/Wellful_logo.jpg' %}" 
                     alt="Wellful Home Logo" 
                     class="h-20 lg:h-28 w-auto max-w-full object-contain opacity-95 hover:opacity-100 transition-opacity"
                 >
@@ -282,7 +303,7 @@
                     Direct Distribution for Retailers, Pharmacies &amp; Clinics.
                 </h2>
                 <p class="text-emerald-100/80 text-sm leading-relaxed">
-                    We supply commercial case packs and bulk cartons directly from our importing warehouse. Enjoy tiered volume discounts and rapid waybill dispatch without bureaucratic sign-up friction.
+                    We supply commercial case packs and bulk cartons directly from our wholesale warehouse depot. Enjoy tiered volume discounts and rapid stock allocation without bureaucratic sign-up friction.
                 </p>
                 <div class="flex flex-wrap items-center gap-3 pt-2">
                     <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-black text-xs shadow-md transition">
@@ -390,7 +411,7 @@
                 </div>
                 <div>
                     <h3 class="text-sm font-black text-white leading-tight">Wellness Fulfillment Limited</h3>
-                    <p class="text-[10px] text-emerald-200 font-semibold">Official Corporate &amp; Import Certification</p>
+                    <p class="text-[10px] text-emerald-200 font-semibold">Official Corporate &amp; Wholesale Certification</p>
                 </div>
             </div>
             <button 
@@ -416,7 +437,7 @@
         <!-- Modal Footer Actions -->
         <div class="px-5 py-3.5 bg-white border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-stone-600 shrink-0">
             <span class="font-medium text-stone-500 text-[11px] text-center sm:text-left">
-                Verified Importer &amp; Distributor • Wellness Fulfillment Limited
+                Verified Wholesale Distributor • Wellness Fulfillment Limited
             </span>
             <div class="flex items-center gap-2 w-full sm:w-auto">
                 <a 

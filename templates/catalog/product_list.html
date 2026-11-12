@@ -35,13 +35,27 @@
         <!-- Category Filter Pills -->
         <div class="flex flex-wrap gap-2 pb-6 border-b border-stone-200">
             {% for cat in categories %}
-            <a 
-                href="{% url 'catalog:category_detail' cat.slug %}" 
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-100 hover:bg-brand-900 hover:text-white text-stone-700 text-xs font-bold transition duration-150"
-            >
-                <i data-lucide="{{ cat.icon|default:'package' }}" class="w-3.5 h-3.5"></i>
-                <span>{{ cat.name }}</span>
-            </a>
+                {% if cat.is_locked %}
+                <span 
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-100/80 border border-stone-200 text-stone-400 text-xs font-bold select-none cursor-not-allowed"
+                    title="Coming Soon"
+                >
+                    <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                    <span>{{ cat.name }}</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-stone-200 text-stone-600">Coming Soon</span>
+                </span>
+                {% else %}
+                <a 
+                    href="{% url 'catalog:category_detail' cat.slug %}" 
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-100 hover:bg-brand-900 hover:text-white text-stone-700 text-xs font-bold transition duration-150"
+                >
+                    <i data-lucide="{{ cat.icon|default:'package' }}" class="w-3.5 h-3.5"></i>
+                    <span>{{ cat.name }}</span>
+                    {% if cat.is_stocking_soon %}
+                        <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-900">Stocking Soon</span>
+                    {% endif %}
+                </a>
+                {% endif %}
             {% endfor %}
         </div>
 

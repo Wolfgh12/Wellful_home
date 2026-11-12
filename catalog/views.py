@@ -10,13 +10,18 @@ from .forms import ProductCreateForm, QuickWhatsAppOrderForm
 
 def home(request):
     categories = Category.objects.all().order_by('name')
-    return render(request, 'home.html', {'categories': categories})
+    categories_by_pillar = {cat.pillar_type: cat for cat in categories}
+    return render(request, 'home.html', {
+        'categories': categories,
+        'categories_by_pillar': categories_by_pillar,
+    })
 
 
 def product_list(request):
     categories = Category.objects.all().order_by('name')
     products = (
         Product.objects.filter(is_active=True)
+        .exclude(category__availability_status=Category.AvailabilityStatus.COMING_SOON)
         .select_related('category')
         .order_by('-created_at')
     )
@@ -30,6 +35,11 @@ def product_list(request):
 
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
+    is_staff_user = request.user.is_authenticated and (request.user.is_staff or request.user.is_superuser)
+    if category.is_locked and not is_staff_user:
+        messages.info(request, f"{category.name} is currently Coming Soon. Please check back shortly or contact our wholesale desk.")
+        return redirect('home')
+
     products = (
         category.products.filter(is_active=True)
         .select_related('category')
@@ -51,6 +61,11 @@ def product_detail(request, slug):
         slug=slug,
         is_active=True
     )
+    is_staff_user = request.user.is_authenticated and (request.user.is_staff or request.user.is_superuser)
+    if product.category.is_locked and not is_staff_user:
+        messages.info(request, f"{product.category.name} is currently Coming Soon.")
+        return redirect('home')
+
     related_products = (
         Product.objects.filter(category=product.category, is_active=True)
         .exclude(id=product.id)
@@ -72,6 +87,30 @@ def product_detail(request, slug):
         'order_form': order_form,
     }
     return render(request, 'catalog/product_detail.html', context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff or u.is_superuser)
+@require_POST
+def admin_pillar_status_update(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    new_status = request.POST.get('availability_status')
+    valid_statuses = {choice[0] for choice in Category.AvailabilityStatus.choices}
+
+    if new_status in valid_statuses:
+        category.availability_status = new_status
+        category.save(update_fields=['availability_status'])
+        messages.success(
+            request,
+            f"Updated '{category.name}' ({category.get_pillar_type_display()}) to {category.get_availability_status_display()}."
+        )
+    else:
+        messages.error(request, "Invalid pillar availability status selected.")
+
+    next_url = request.POST.get('next') or request.META.get('HTTP_REFERER')
+    if next_url:
+        return redirect(next_url)
+    return redirect('accounts:admin_dashboard')
 
 
 @login_required
