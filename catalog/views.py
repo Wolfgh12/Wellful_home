@@ -3,13 +3,24 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.http import require_POST
 from django.contrib import messages
-from django.db.models import ProtectedError
+from django.db.models import ProtectedError, Case, When, Value, IntegerField
+from django.db.models.functions import Lower
 from .models import Category, Product, ProductImage, Order, OrderItem
 from .forms import ProductCreateForm, QuickWhatsAppOrderForm
 
 
+def get_ordered_categories():
+    return Category.objects.annotate(
+        is_locked_order=Case(
+            When(availability_status=Category.AvailabilityStatus.COMING_SOON, then=Value(1)),
+            default=Value(0),
+            output_field=IntegerField(),
+        )
+    ).order_by('is_locked_order', Lower('name'))
+
+
 def home(request):
-    categories = Category.objects.all().order_by('name')
+    categories = get_ordered_categories()
     categories_by_pillar = {cat.pillar_type: cat for cat in categories}
     return render(request, 'home.html', {
         'categories': categories,
@@ -18,7 +29,7 @@ def home(request):
 
 
 def product_list(request):
-    categories = Category.objects.all().order_by('name')
+    categories = get_ordered_categories()
     products = (
         Product.objects.filter(is_active=True)
         .exclude(category__availability_status=Category.AvailabilityStatus.COMING_SOON)
@@ -45,7 +56,7 @@ def category_detail(request, slug):
         .select_related('category')
         .order_by('-created_at')
     )
-    all_categories = Category.objects.all().order_by('name')
+    all_categories = get_ordered_categories()
     
     context = {
         'category': category,
