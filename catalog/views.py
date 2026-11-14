@@ -20,7 +20,9 @@ def get_ordered_categories():
 
 
 def home(request):
-    categories = get_ordered_categories()
+    categories = get_ordered_categories().exclude(
+        availability_status=Category.AvailabilityStatus.COMING_SOON
+    )
     categories_by_pillar = {cat.pillar_type: cat for cat in categories}
     return render(request, 'home.html', {
         'categories': categories,
@@ -29,7 +31,9 @@ def home(request):
 
 
 def product_list(request):
-    categories = get_ordered_categories()
+    categories = get_ordered_categories().exclude(
+        availability_status=Category.AvailabilityStatus.COMING_SOON
+    )
     products = (
         Product.objects.filter(is_active=True)
         .exclude(category__availability_status=Category.AvailabilityStatus.COMING_SOON)
@@ -56,7 +60,9 @@ def category_detail(request, slug):
         .select_related('category')
         .order_by('-created_at')
     )
-    all_categories = get_ordered_categories()
+    all_categories = get_ordered_categories().exclude(
+        availability_status=Category.AvailabilityStatus.COMING_SOON
+    )
     
     context = {
         'category': category,

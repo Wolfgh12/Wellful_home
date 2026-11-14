@@ -186,8 +186,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             {% for category in categories %}
             
-            {% if forloop.last %}
-            <!-- Left Flanking Logo: Centers the 7th Card on Row 3 -->
+            {% if forloop.last and categories|length == 1 or forloop.last and categories|length == 4 or forloop.last and categories|length == 7 %}
+            <!-- Left Flanking Logo: Centers the Lone Card on the Final Row -->
             <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
                     src="{% static 'images/Wellful_logo.jpg' %}" 
@@ -270,8 +270,8 @@
                 </div>
             </div>
 
-            {% if forloop.last %}
-            <!-- Right Flanking Logo: Balances Row 3 -->
+            {% if forloop.last and categories|length == 1 or forloop.last and categories|length == 4 or forloop.last and categories|length == 7 %}
+            <!-- Right Flanking Logo: Balances the Final Row -->
             <div class="hidden md:flex items-center justify-center p-6 bg-emerald-50/70 rounded-3xl border-2 border-emerald-200 shadow-sm h-full">
                 <img 
                     src="{% static 'images/Wellful_logo.jpg' %}" 
