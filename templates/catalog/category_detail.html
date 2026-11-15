@@ -75,8 +75,8 @@
             <!-- Product Grid -->
             <main class="lg:col-span-9">
 
-                <!-- Dedicated InheritanceBox Proprietary Platform Banner (Wellful Data Only) -->
-                {% if category.slug == 'wellful-data' or 'data' in category.slug %}
+                <!-- Dedicated InheritanceBox Proprietary Platform Banner (Wellful Trace Only) -->
+                {% if category.pillar_type == 'DEPOSITORY' or category.slug == 'wellful-trace' or 'trace' in category.slug or category.slug == 'wellful-data' or 'data' in category.slug %}
                 <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-950 via-stone-950 to-emerald-950 border-2 border-emerald-500/40 shadow-2xl p-6 sm:p-8 mb-8 text-white">
                     <!-- Ambient Glow -->
                     <div class="absolute -top-24 -right-24 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
@@ -147,8 +147,9 @@
                 </div>
                 {% endif %}
 
-                <!-- Physical Hardware Products Section (Suppressed for Wellful Data) -->
-                {% if products or category.slug != 'wellful-data' and 'data' not in category.slug %}
+                <!-- Physical Hardware Products Section (Suppressed for Wellful Trace) -->
+                {% if products or category.pillar_type != 'DEPOSITORY' and category.slug != 'wellful-trace' and 'trace' not in category.slug and category.slug != 'wellful-data' and 'data' not in category.slug %}
+                <div class="flex items-center justify-between pb-6 mb-6 border-b border-stone-200">
                 <div class="flex items-center justify-between pb-6 mb-6 border-b border-stone-200">
                     <div>
                         <h2 class="text-lg font-bold text-stone-900">Available Products</h2>
